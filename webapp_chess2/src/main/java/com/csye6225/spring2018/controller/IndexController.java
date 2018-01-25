@@ -1,5 +1,6 @@
 package com.csye6225.spring2018.controller;
 
+import dbDriver.Driver;
 import org.springframework.ui.Model;
 import com.csye6225.spring2018.entity.*;
 import com.csye6225.spring2018.UpdateAccount;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 import java.util.Date;
 
 
@@ -18,9 +20,11 @@ public class IndexController {
 
   private final static Logger logger = LoggerFactory.getLogger(IndexController.class);
   private AccountDirectory accountDirectory;
+  private Driver driver;
 
   public IndexController() {
     accountDirectory = new AccountDirectory();
+    this.driver = new Driver();
   }
 
   @RequestMapping("/")
@@ -43,28 +47,29 @@ public class IndexController {
     logger.info("Loading success page.");
     String email = request.getParameter("username");
     String password = request.getParameter("password");
-    if(!accountDirectory.getAccountDirectory().isEmpty()) {
-      for(Account a: accountDirectory.getAccountDirectory()) {
-        if(a.getName().equals(email)) {
-          return "exist";
-        }
-      }
+    boolean flag = false;
+    try {
+      flag = driver.registerUser(email, password);
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
 
-    UpdateAccount upa = new UpdateAccount(accountDirectory, email, password);
-    upa.addAccount();
-    return "success";
+   if(flag){
+      return "success";
+   }
+   return "exist";
 
   }
 
   @RequestMapping("/login")
-  public String login(HttpServletRequest request, Model model){
+  public String login(HttpServletRequest request, Model model) throws SQLException {
     logger.info("Loading login page.");
     String email = request.getParameter("username");
     String password = request.getParameter("password");
-    UpdateAccount upa = new UpdateAccount(accountDirectory, email, password);
-    if(upa.checkAccount()){
+    boolean falg = false;
+    if(driver.isValidUser(email, password)){
       model.addAttribute("time", new Date());
+
       return "loggedin";
     }
     return "false";
