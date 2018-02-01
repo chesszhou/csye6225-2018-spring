@@ -1,5 +1,12 @@
 {
    "AWSTemplateFormatVersion" : "2010-09-09",
+   "Parameters": {
+    "StackName": {
+      "Default" : " ",
+      "Description" : "Stack Name",
+      "Type": "String"
+    }
+   },
    "Resources" : {
       "myVPC" : {
          "Type" : "AWS::EC2::VPC",
@@ -8,14 +15,13 @@
     	    "EnableDnsSupport" : "false",
     	    "EnableDnsHostnames" : "false",
             "InstanceTenancy" : "default",
-            "Tags" : [ {"Key" : "Name", "Value" : "-csye6225-vpc"} ]
+            "Tags" : [ {"Key" : "Name", "Value" : {"Fn::Join" : [ "", [ {"Ref":"StackName"}, "-csye6225-vpc" ]]}} ]
          }
       },
       "myInternetGateway" : {
          "Type" : "AWS::EC2::InternetGateway",
          "Properties" : {
-            "VpcId" : { "Ref" : "myVPC" },
-            "Tags" : [ {"Key" : "Name", "Value" : "-csye6225-InternetGateway"}]
+            "Tags" : [ {"Key" : "Name", "Value" : {"Fn::Join" : [ "", [ {"Ref":"StackName"}, "-csye6225-InternetGateway" ]]}}]
          }
       },
       "AttachGateway" : {
@@ -29,7 +35,7 @@
          "Type" : "AWS::EC2::RouteTable",
          "Properties" : {
             "VpcId" : { "Ref" : "myVPC" },
-            "Tags" : [ { "Key" : "Name", "Value" : "-csye6225-public-route-table" } ]
+            "Tags" : [ { "Key" : "Name", "Value" : {"Fn::Join" : [ "", [ {"Ref":"StackName"}, "-csye6225-RouteTable" ]]} } ]
          }
       },
       "myRoute" : {
