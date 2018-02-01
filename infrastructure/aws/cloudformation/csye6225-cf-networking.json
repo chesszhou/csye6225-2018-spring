@@ -1,0 +1,51 @@
+{
+   "AWSTemplateFormatVersion" : "2010-09-09",
+   "Parameters": {
+    "StackName": {
+      "Default" : " ",
+      "Description" : "Stack Name",
+      "Type": "String"
+    }
+   },
+   "Resources" : {
+      "myVPC" : {
+         "Type" : "AWS::EC2::VPC",
+         "Properties" : {
+            "CidrBlock" : "10.0.0.0/16",
+    	    "EnableDnsSupport" : "false",
+    	    "EnableDnsHostnames" : "false",
+            "InstanceTenancy" : "default",
+            "Tags" : [ {"Key" : "Name", "Value" : {"Fn::Join" : [ "", [ {"Ref":"StackName"}, "-csye6225-vpc" ]]}} ]
+         }
+      },
+      "myInternetGateway" : {
+         "Type" : "AWS::EC2::InternetGateway",
+         "Properties" : {
+            "Tags" : [ {"Key" : "Name", "Value" : {"Fn::Join" : [ "", [ {"Ref":"StackName"}, "-csye6225-InternetGateway" ]]}}]
+         }
+      },
+      "AttachGateway" : {
+         "Type" : "AWS::EC2::VPCGatewayAttachment",
+         "Properties" : {
+            "VpcId" : { "Ref" : "myVPC" },
+            "InternetGatewayId" : { "Ref" : "myInternetGateway" }
+         }
+      },
+      "myRouteTable" : {
+         "Type" : "AWS::EC2::RouteTable",
+         "Properties" : {
+            "VpcId" : { "Ref" : "myVPC" },
+            "Tags" : [ { "Key" : "Name", "Value" : {"Fn::Join" : [ "", [ {"Ref":"StackName"}, "-csye6225-RouteTable" ]]} } ]
+         }
+      },
+      "myRoute" : {
+         "Type" : "AWS::EC2::Route",
+         "DependsOn" : "AttachGateway",
+         "Properties" : {
+            "RouteTableId" : { "Ref" : "myRouteTable" },
+            "DestinationCidrBlock" : "0.0.0.0/0",
+            "GatewayId" : { "Ref" : "myInternetGateway" }
+         }
+      }
+   }
+}
