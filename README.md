@@ -2,8 +2,8 @@
 ### Coursework Project Repository
 ####Team members:  
 Yiyi Zhou: zhou.yiy@husky.neu.edu  
-Zhenyu  Zhu:   
-Beiwen:  
+Zhenyu  Zhu: zhu.zheny@husky.neu.edu  
+Beiwen:  guo.bei@husky.neu.edu
 
 #### Software Configurations
 Operating System: Ubantu 16.04.3  
