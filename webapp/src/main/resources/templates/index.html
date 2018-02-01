@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="fragments/header :: header"/>
+<body>
+<div th:replace="fragments/navigation :: navigation"/>
+
+
+<!-- Page Content -->
+<div class="container">
+            <p>
+                <h3>Welcome to CSYE 6225 Spring 2018 Semester!!! <br/></h3>
+                Please enter your email and password to login!
+            </p>
+
+    <form action="/login" method="POST">
+        <table border="0">
+            <tr>
+                <td> email:</td>
+                <td><input type="eamil" name="username" value="default"/></td>
+            </tr>
+            <tr>
+                <td> Password:</td>
+                <td> <input type="password" name="password" /></td>
+            </tr>
+
+        </table>
+        <br />
+        <input type="submit" value="Login" onclick="alert('logging')" />
+    </form>
+
+
+</div>
+<!-- /.container -->
+
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>
+
+
