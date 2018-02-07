@@ -1,0 +1,19 @@
+language: java
+jdk:
+  - openjdk8
+  - oraclejdk8
+
+sudo: false
+install: true
+
+script:
+  - ./gradlew war
+
+notifications:
+  email:
+    recipients:
+      - guo.bei@husky.neu.edu
+      - zhu.zheny@husky.neu.edu
+      - zhou.yiy@husky.neu.edu
+    on_success: always
+    on_failure: never
