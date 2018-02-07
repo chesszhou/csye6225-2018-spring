@@ -7,7 +7,7 @@ sudo: false
 install: true
 
 script:
-  - ./gradlew war
+  - ./webapp/gradlew war
 
 notifications:
   email:
