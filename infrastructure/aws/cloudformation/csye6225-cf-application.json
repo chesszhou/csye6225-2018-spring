@@ -1,0 +1,38 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "EC2Instance": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-66506c1c",
+                "InstanceType": "t2.micro",
+                "DisableApiTermination": true,
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sdm",
+                        "Ebs": {
+                            "VolumeType": "gp2",  
+                            "VolumeSize": "16"
+                        }
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "-",
+                                [
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    },
+                                    "csye6225-EC2Instance"
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
