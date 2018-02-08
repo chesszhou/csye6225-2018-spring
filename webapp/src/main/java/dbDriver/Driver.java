@@ -13,7 +13,7 @@ public class Driver {
     public Driver(){
         try {
             this.myConnect = DriverManager.getConnection("jdbc:mysql://localhost:3306/csye6225",
-                    "root", "www163935");
+                    "root", "1994218m");
             this.myStat = myConnect.createStatement();
             this.resultSet = myStat.executeQuery("select * from user");
             this.users = new HashMap<>();
