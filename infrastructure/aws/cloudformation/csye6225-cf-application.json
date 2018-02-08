@@ -1,0 +1,34 @@
+{
+   "AWSTemplateFormatVersion" : "2010-09-09",
+   "Parameters": {
+    "StackName": {
+      "Default" : " ",
+      "Description" : "Ec2 instance",
+      "Type": "String"
+    }
+   },
+   "Resources" : {
+      "MyEC2Instance" :{
+        "Type": "AWS::EC2::Instance",
+        "Properties" :{
+            "ImageId" :  "ami-41e0b93b",
+            "DisableApiTermination" : "true",
+            "InstanceType": "t2.micro",
+            "BlockDeviceMappings" : [
+               {
+                  "DeviceName" : "/dev/sdm",
+                  "Ebs" : {
+                     "VolumeType" : "gp2",
+                     "DeleteOnTermination" : "false",
+                     "VolumeSize" : "16"
+                  }
+               },
+               {
+                  "DeviceName" : "/dev/sdk",
+                  "NoDevice" : {}
+               }
+             ]
+        }
+      }
+   }
+}
