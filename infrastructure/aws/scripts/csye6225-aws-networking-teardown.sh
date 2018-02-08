@@ -18,8 +18,9 @@ aws ec2 delete-route-table --route-table-id $ROUTE_TABLE_ID
 
 aws ec2 delete-internet-gateway --internet-gateway-id $GATEWAY_ID
 
-SUCCESS=$(aws ec2 delete-vpc --vpc-id $VPC_ID)
-if [ -z "$SUCCESS" ]; then
+SUCCESS=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=$STACK_NAME-csye6225-vpc | jq -r '.Vpcs[0].VpcId')
+
+if [ !"$SUCCESS" ]; then
   #statements
   echo "Success"
 else
