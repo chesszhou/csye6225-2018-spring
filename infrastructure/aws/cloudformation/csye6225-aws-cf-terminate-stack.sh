@@ -8,6 +8,8 @@ STATUS=1
 
 SUCCESS=$(aws cloudformation delete-stack --stack-name $STACK_NAME)
 
+STATUS=$(aws cloudformation describe-stacks --stack-name $STACK_NAME)
+
 if [ -z "$STATUS" ]; then
   #statements
   echo "Success"
