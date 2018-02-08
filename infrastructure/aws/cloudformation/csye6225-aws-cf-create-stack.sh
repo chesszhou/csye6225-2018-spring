@@ -1,4 +1,13 @@
 #!/bin/sh
 
 STACK_NAME=$1
-aws cloudformation create-stack --stack-name $STACK_NAME --template-body file://csye6225-cf-networking.json
+SUCCESS=1
+
+SUCCESS=$(aws cloudformation create-stack --stack-name $STACK_NAME --template-body file://csye6225-cf-networking.json)
+
+if [ "$SUCCESS" != 1 ]; then
+  #statements
+  echo "Success!"
+else
+  echo "Failed!"
+fi
