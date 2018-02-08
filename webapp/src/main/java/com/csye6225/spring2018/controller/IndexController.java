@@ -19,11 +19,18 @@ import java.util.Date;
 public class IndexController {
 
   private final static Logger logger = LoggerFactory.getLogger(IndexController.class);
+<<<<<<< HEAD
   private AccountDirectory accountDirectory;
   private Driver driver;
 
   public IndexController() {
     accountDirectory = new AccountDirectory();
+=======
+
+  private Driver driver;
+
+  public IndexController() {
+>>>>>>> 5687c821f56c3248dc145fa6dd9252cf1005409c
     this.driver = new Driver();
   }
 
@@ -66,7 +73,10 @@ public class IndexController {
     logger.info("Loading login page.");
     String email = request.getParameter("username");
     String password = request.getParameter("password");
+<<<<<<< HEAD
     boolean falg = false;
+=======
+>>>>>>> 5687c821f56c3248dc145fa6dd9252cf1005409c
     if(driver.isValidUser(email, password)){
       model.addAttribute("time", new Date());
 

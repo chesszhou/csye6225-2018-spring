@@ -1,0 +1,52 @@
+2018-01-25 15:15:34,993 INFO o.a.j.u.JMeterUtils: Setting Locale to en_US
+2018-01-25 15:15:35,005 INFO o.a.j.JMeter: Loading user properties from: /usr/local/Cellar/jmeter/3.3/libexec/bin/user.properties
+2018-01-25 15:15:35,005 INFO o.a.j.JMeter: Loading system properties from: /usr/local/Cellar/jmeter/3.3/libexec/bin/system.properties
+2018-01-25 15:15:35,011 INFO o.a.j.JMeter: Copyright (c) 1998-2017 The Apache Software Foundation
+2018-01-25 15:15:35,011 INFO o.a.j.JMeter: Version 3.3 r1808647
+2018-01-25 15:15:35,012 INFO o.a.j.JMeter: java.version=1.8.0_144
+2018-01-25 15:15:35,012 INFO o.a.j.JMeter: java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2018-01-25 15:15:35,012 INFO o.a.j.JMeter: os.name=Mac OS X
+2018-01-25 15:15:35,012 INFO o.a.j.JMeter: os.arch=x86_64
+2018-01-25 15:15:35,012 INFO o.a.j.JMeter: os.version=10.12.6
+2018-01-25 15:15:35,012 INFO o.a.j.JMeter: file.encoding=UTF-8
+2018-01-25 15:15:35,012 INFO o.a.j.JMeter: Max memory     =536870912
+2018-01-25 15:15:35,012 INFO o.a.j.JMeter: Available Processors =4
+2018-01-25 15:15:35,018 INFO o.a.j.JMeter: Default Locale=English (United States)
+2018-01-25 15:15:35,018 INFO o.a.j.JMeter: JMeter  Locale=English (United States)
+2018-01-25 15:15:35,018 INFO o.a.j.JMeter: JMeterHome=/usr/local/Cellar/jmeter/3.3/libexec
+2018-01-25 15:15:35,018 INFO o.a.j.JMeter: user.dir  =/Users/chess/csye6225/dev/csye6225-2018-spring
+2018-01-25 15:15:35,018 INFO o.a.j.JMeter: PWD       =/Users/chess/csye6225/dev/csye6225-2018-spring
+2018-01-25 15:15:40,095 INFO o.a.j.JMeter: IP: 10.110.26.129 Name: Chess-MacBook-Pro.local FullName: 10.110.26.129
+2018-01-25 15:15:42,351 INFO o.a.j.g.a.LookAndFeelCommand: Using look and feel: com.apple.laf.AquaLookAndFeel [Mac OS X, System]
+2018-01-25 15:15:42,357 INFO o.a.j.JMeter: Loaded icon properties from org/apache/jmeter/images/icon.properties
+2018-01-25 15:15:42,863 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2018-01-25 15:15:42,864 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2018-01-25 15:15:43,609 INFO o.a.j.g.u.MenuFactory: Skipping org.apache.jmeter.assertions.BSFAssertion
+2018-01-25 15:15:44,131 INFO o.a.j.g.u.MenuFactory: Skipping org.apache.jmeter.extractor.BSFPostProcessor
+2018-01-25 15:15:44,159 INFO o.a.j.g.u.MenuFactory: Skipping org.apache.jmeter.modifiers.BSFPreProcessor
+2018-01-25 15:15:44,188 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2018-01-25 15:15:44,188 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2018-01-25 15:15:44,189 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2018-01-25 15:15:44,189 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2018-01-25 15:15:44,189 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2018-01-25 15:15:44,189 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2018-01-25 15:15:44,459 INFO o.a.j.e.KeyToolUtils: keytool found at 'keytool'
+2018-01-25 15:15:44,459 INFO o.a.j.p.h.p.ProxyControl: HTTP(S) Test Script Recorder SSL Proxy will use keys that support embedded 3rd party resources in file /usr/local/Cellar/jmeter/3.3/libexec/bin/proxyserver.jks
+2018-01-25 15:15:44,581 INFO o.a.j.g.u.MenuFactory: Skipping org.apache.jmeter.protocol.java.sampler.BSFSampler
+2018-01-25 15:15:44,609 INFO o.a.j.s.FileServer: Default base='/Users/chess/csye6225/dev/csye6225-2018-spring'
+2018-01-25 15:15:44,673 INFO o.a.j.g.u.MenuFactory: Skipping org.apache.jmeter.protocol.mongodb.config.MongoSourceElement
+2018-01-25 15:15:44,673 INFO o.a.j.g.u.MenuFactory: Skipping org.apache.jmeter.protocol.mongodb.sampler.MongoScriptSampler
+2018-01-25 15:15:44,776 INFO o.a.j.g.u.MenuFactory: Skipping org.apache.jmeter.timers.BSFTimer
+2018-01-25 15:15:44,801 INFO o.a.j.g.u.MenuFactory: Skipping org.apache.jmeter.visualizers.BSFListener
+2018-01-25 15:15:44,938 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2018-01-25 15:15:44,938 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to ISO-8859-1
+2018-01-25 15:15:44,938 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2018-01-25 15:15:44,939 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2018-01-25 15:15:53,960 INFO o.a.j.g.a.Load: Loading file: /Users/chess/csye6225/dev/csye6225-2018-spring/jmeter/View Results in Table.jmx
+2018-01-25 15:15:53,960 INFO o.a.j.s.FileServer: Set new base='/Users/chess/csye6225/dev/csye6225-2018-spring/jmeter'
+2018-01-25 15:15:54,112 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2018-01-25 15:15:54,124 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2018-01-25 15:15:54,126 INFO o.a.j.s.SaveService: Using SaveService properties version 3.2
+2018-01-25 15:15:54,128 INFO o.a.j.s.SaveService: Loading file: /Users/chess/csye6225/dev/csye6225-2018-spring/jmeter/View Results in Table.jmx
+2018-01-25 15:15:54,232 INFO o.a.j.s.FileServer: Set new base='/Users/chess/csye6225/dev/csye6225-2018-spring/jmeter'
+2018-01-25 15:37:37,451 INFO o.a.j.g.a.What: TestElement: class org.apache.jmeter.reporters.ResultCollector, guiClassName: org.apache.jmeter.visualizers.ViewResultsFullVisualizer
