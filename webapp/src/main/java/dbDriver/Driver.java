@@ -12,12 +12,8 @@ public class Driver {
     HashMap<String, String> users;
     public Driver(){
         try {
-<<<<<<< HEAD
-            this.myConnect = DriverManager.getConnection("jdbc:mysql://localhost:3306/csye6225", "root", "1994218m");
-=======
             this.myConnect = DriverManager.getConnection("jdbc:mysql://localhost:3306/csye6225",
                     "root", "www163935");
->>>>>>> 5687c821f56c3248dc145fa6dd9252cf1005409c
             this.myStat = myConnect.createStatement();
             this.resultSet = myStat.executeQuery("select * from user");
             this.users = new HashMap<>();
