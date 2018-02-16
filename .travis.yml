@@ -15,7 +15,8 @@ script:
 
 after_success:
   - mkdir codedeploy
-  - zip -r csye6225-web-app-${TRAVIS_JOB_NUMBER}.zip build/libs/ROOT.war infrastructrue/aws/codedeploy/appspec.yml
+  - pwd
+  - zip -r csye6225-web-app-${TRAVIS_JOB_NUMBER}.zip webapp/build/libs/exploded/ROOT.war infrastructrue/aws/codedeploy/appspec.yml
   - ls -al
   - mv csye6225-web-app-$TRAVIS_JOB_NUMBER.zip codedeploy/
   - ls -al
