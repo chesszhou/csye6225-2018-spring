@@ -11,6 +11,7 @@ branches:
     - travisLab
 
 script:
+  - ./webapp/gradlew build
   - ./gradlew war
 
 after_success:
