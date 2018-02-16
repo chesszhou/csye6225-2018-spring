@@ -11,7 +11,7 @@ branches:
 
 script:
   - ./webapp/gradlew build
-  - ls -al webapp/build/libs
+  - ls -al ./webapp/build/libs
 
 after_success:
   - mkdir codedeploy
