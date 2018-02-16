@@ -24,7 +24,7 @@ after_success:
   - cd codedeploy
   - ls -al
   - pwd
-  - cd..
+  - cd ..
 
 notifications:
   email:
