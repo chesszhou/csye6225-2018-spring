@@ -11,8 +11,20 @@ branches:
   - travislab
 
 script:
-  - ./webapp/gradlew build
+  - ./webapp/gradlew war
 
+after_success:
+  - mkdir codedeploy
+  - zip -r csye6225-web-app-$TRAVIS_JOB_NUMBER.zip build/libs/ROOT.war infrastructure/aws/codedeploy/appspec.yml
+  - ls -al
+  - mv csye6225-web-app-$TRAVIS_JOB_NUMBER.zip codedeploy/
+  - ls -al
+  - pwd
+  - cd codedeploy
+  - ls -al
+  - pwd
+  - cd ..
+  - pwd
 notifications:
   email:
     recipients:
