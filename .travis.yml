@@ -6,6 +6,10 @@ jdk:
 sudo: false
 install: true
 
+branches:
+  only:
+  - travislab
+
 script:
   - ./webapp/gradlew build
 
