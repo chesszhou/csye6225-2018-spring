@@ -30,7 +30,7 @@ after_success:
 deploy:
   - provider: s3
     localdir: codedeploy
-    bucket: code-deploy.csye6225.com
+    bucket: code-deploy.csye6225zzy.com
     region: us-east-1
     skip_cleanup: true
     access_key_id: $access_key_id
