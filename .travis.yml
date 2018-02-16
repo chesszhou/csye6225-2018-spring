@@ -11,7 +11,7 @@ branches:
   - travislab
 
 script:
-  - ./webapp/gradlew war
+  - ./webapp/gradlew build
 
 after_success:
   - mkdir codedeploy
