@@ -5,7 +5,7 @@ SUCCESS=""
 WAIT=""
 SUBNET_NAME_DB="subnet-group"
 EC2_SUBNET_ID=$(aws ec2 describe-subnets --filters Name=tag:aws:cloudformation:logical-id,Values=SubnetForWebServers | jq -r '.Subnets[0].SubnetId')
-EC2_SG_ID=$(aws ec2 describe-security-groups --filters Name=tag:aws:cloudformation:logical-id,Values=csye6225webapp | jq -r '.SecurityGroups.GroupId')
+EC2_SG_ID=$(aws ec2 describe-security-groups --filters Name=tag:aws:cloudformation:logical-id,Values=csye6225webapp | jq -r '.SecurityGroups[0].GroupId')
 
 
 
