@@ -65,6 +65,16 @@
         "Default" : " ",
         "Description" : "EC2 SG id",
         "Type" : "String"
+      },
+      "TypeofVolume" : {
+        "Default" : " ",
+        "Description" : "Type of ec2 volume",
+        "Type" : "String"
+      },
+      "SizeofVolume" : {
+        "Default" : " ",
+        "Description" : "Size of ec2 volume",
+        "Type" : "String"
       }
     },
     "Resources": {
@@ -80,8 +90,8 @@
                     {
                         "DeviceName": "/dev/sdm",
                         "Ebs": {
-                            "VolumeType": "gp2",
-                            "VolumeSize": "16"
+                            "VolumeType": {"Ref" : "TypeofVolume"},
+                            "VolumeSize": {"Ref" : "SizeofVolume"}
                         }
                     }
                 ],
