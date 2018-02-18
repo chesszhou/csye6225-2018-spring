@@ -114,7 +114,7 @@
                   "AttributeName" : "id",
                   "KeyType" : "HASH"
                 } ],
-        "ProvisionedThroughput" : {
+          "ProvisionedThroughput" : {
           "ReadCapacityUnits" : "5",
           "WriteCapacityUnits" : "5"
         },
