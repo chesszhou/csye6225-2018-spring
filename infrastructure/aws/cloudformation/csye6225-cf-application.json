@@ -58,7 +58,13 @@
       },
       "IdofEC2Subnet": {
         "Default" : " ",
-        "Description" : "EC2 subnet id"
+        "Description" : "EC2 subnet id",
+        "Type" : "String"
+      },
+      "IdofEC2SecurityGroups" : {
+        "Default" : " ",
+        "Description" : "EC2 SG id",
+        "Type" : "String"
       }
     },
     "Resources": {
@@ -69,6 +75,7 @@
                 "InstanceType": {"Ref" : "TypeOfInstance"},
                 "DisableApiTermination": true,
                 "SubnetId": {"Ref" : "IdofEC2Subnet"},
+                "SecurityGroupIds": [{"Ref" : "IdofEC2SecurityGroups"}],
                 "BlockDeviceMappings": [
                     {
                         "DeviceName": "/dev/sdm",
@@ -137,7 +144,7 @@
                 "PubliclyAccessible" : false,
                 "Engine" : {"Ref" : "TypeofEngine"},
                 "EngineVersion" : {"Ref" : "versionOfEngine"},
-                "DBSubnetGroupName" : {"Ref" : "SubnetGroupNameofDB"},
+                "DBSubnetGroupName" : {"Ref" : "SubnetGroupNameofDB"}
               }
       }
     }
