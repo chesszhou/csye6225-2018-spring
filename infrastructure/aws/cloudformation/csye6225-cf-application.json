@@ -1,12 +1,81 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+      "IdOfImage": {
+        "Default" : " ",
+        "Description" : "ImageId of EC2 Instance",
+        "Type": "String"
+      },
+      "TypeOfInstance": {
+        "Default" : " ",
+        "Description" : "InstanceType of EC2 Instance",
+        "Type": "String"
+      },
+      "NameOfBucket": {
+        "Default" : " ",
+        "Description" : "Name of S3 Bucket",
+        "Type": "String"
+      },
+      "ClassofDBInstance": {
+        "Default" : " ",
+        "Description" : "Class of Db Instance",
+        "Type": "String"
+      },
+      "IdentiferofDBinstance": {
+        "Default" : " ",
+        "Description" : "Identifer of DBinstance",
+        "Type" : "String"
+      },
+      "NameofDB": {
+        "Default" : " ",
+        "Description" : "Name of Database",
+        "Type" : "String"
+      },
+      "usernameOfMaster": {
+        "Default" : " ",
+        "Description" : "username",
+        "Type" : "String"
+      },
+      "passwordOfMaster": {
+        "Default" : " ",
+        "Description" : "password",
+        "Type" : "String"
+      },
+      "TypeofEngine": {
+        "Default" : " ",
+        "Description" : "Engine Type",
+        "Type" : "String"
+      },
+      "versionOfEngine": {
+        "Default" : " ",
+        "Description" : "Engine Version",
+        "Type" : "String"
+      },
+      "SubnetGroupNameofDB": {
+        "Default" : " ",
+        "Description" : "The group name of DB subnet",
+        "Type" : "String"
+      },
+      "IdofEC2Subnet": {
+        "Default" : " ",
+        "Description" : "EC2 subnet id",
+        "Type" : "String"
+      },
+      "IdofEC2SecurityGroups" : {
+        "Default" : " ",
+        "Description" : "EC2 SG id",
+        "Type" : "String"
+      }
+    },
     "Resources": {
         "EC2Instance": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
-                "ImageId": "ami-66506c1c",
-                "InstanceType": "t2.micro",
+                "ImageId": {"Ref" : "IdOfImage"},
+                "InstanceType": {"Ref" : "TypeOfInstance"},
                 "DisableApiTermination": true,
+                "SubnetId": {"Ref" : "IdofEC2Subnet"},
+                "SecurityGroupIds": [{"Ref" : "IdofEC2SecurityGroups"}],
                 "BlockDeviceMappings": [
                     {
                         "DeviceName": "/dev/sdm",
@@ -38,45 +107,45 @@
             "Type" : "AWS::DynamoDB::Table",
             "Properties" : {
             "AttributeDefinitions" : [ {
-              "AttributeName" : "ArtistId",
+              "AttributeName" : "Id",
               "AttributeType" : "S"
             },
             {
-              "AttributeName" : "Concert",
+              "AttributeName" : "email",
               "AttributeType" : "S"
             },
             {
-              "AttributeName" : "TicketSales",
+              "AttributeName" : "password",
               "AttributeType" : "S"
             } ],
             "KeySchema" : [ {
                   "AttributeName" : "id",
-                  "KeyType" : "String"
+                  "KeyType" : "HASH"
                 } ],
-            "TableName" : "csye6225",
-          },
+            "TableName" : "csye6225"
+          }
+        },
         "S3Bucket": {
             "Type" : "AWS::S3::Bucket",
             "Properties" : {
-              "BucketName" : "s3.csye6225-spring2018-zhuzheny.me.",
+              "BucketName" : {"Ref" : "NameOfBucket"}
             }
-          }
         },
         "rdsInstance": {
             "Type" : "AWS::RDS::DBInstance",
             "Properties" :
               {
-                "DBInstanceClass" : "db.t2.medium",
-                "DBInstanceIdentifier" : "csye6225-spring2018",
-                "DBName" : "csye6225",
-                "MasterUsername" : "csye6225master",
-                "MasterUserPassword" : "csye6225password",
+                "DBInstanceClass" : {"Ref" : "ClassofDBInstance"},
+                "DBInstanceIdentifier" : {"Ref" : "IdentiferofDBinstance"},
+                "DBName" : {"Ref" : "NameofDB" },
+                "MasterUsername" : {"Ref" : "usernameOfMaster"},
+                "MasterUserPassword" : {"Ref" : "passwordOfMaster"},
                 "MultiAZ" : false,
                 "PubliclyAccessible" : false,
-                "Engine" : "MySQL",
-                "EngineVersion" : "5.6.37",
-                "DBSubnetGroupName" : "",
+                "Engine" : {"Ref" : "TypeofEngine"},
+                "EngineVersion" : {"Ref" : "versionOfEngine"},
+                "DBSubnetGroupName" : {"Ref" : "SubnetGroupNameofDB"}
               }
-      }
-    }
+            }
+          }
 }

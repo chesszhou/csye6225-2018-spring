@@ -1,13 +1,42 @@
 language: java
 jdk:
   - openjdk8
-  - oraclejdk8
 
 sudo: false
 install: true
 
+branches:
+  only:
+  - travislab
+
 script:
   - ./webapp/gradlew build
+
+after_success:
+  - mkdir codedeploy
+  - pwd
+  - zip -r csye6225-web-app-$TRAVIS_JOB_NUMBER.zip webapp/build/libs/ROOT.war infrastructure/aws/codedeploy/appspec.yml
+  - ls -al
+  - mv csye6225-web-app-$TRAVIS_JOB_NUMBER.zip codedeploy/
+  - ls -al
+  - pwd
+  - cd codedeploy
+  - ls -al
+  - pwd
+  - cd ..
+  - pwd
+
+deploy:
+  - provider: s3
+    local_dir: codedeploy
+    bucket: code-deploy.csye6225zzy.com
+    region: us-east-1
+    skip_cleanup: true
+    access_key_id: AKIAJPOFTDESJURXE3GQ
+    secret_access_key: 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
+    on:
+      branch: travislab
+
 
 notifications:
   email:
