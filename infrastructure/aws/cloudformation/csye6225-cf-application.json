@@ -107,21 +107,17 @@
             "Type" : "AWS::DynamoDB::Table",
             "Properties" : {
             "AttributeDefinitions" : [ {
-              "AttributeName" : "Id",
+              "AttributeName" : "id",
               "AttributeType" : "S"
-            },
-            {
-              "AttributeName" : "email",
-              "AttributeType" : "S"
-            },
-            {
-              "AttributeName" : "password",
-              "AttributeType" : "S"
-            } ],
+            }],
             "KeySchema" : [ {
                   "AttributeName" : "id",
                   "KeyType" : "HASH"
                 } ],
+          "ProvisionedThroughput" : {
+          "ReadCapacityUnits" : "5",
+          "WriteCapacityUnits" : "5"
+        },
             "TableName" : "csye6225"
           }
         },
@@ -135,6 +131,7 @@
             "Type" : "AWS::RDS::DBInstance",
             "Properties" :
               {
+                "AllocatedStorage": "10",
                 "DBInstanceClass" : {"Ref" : "ClassofDBInstance"},
                 "DBInstanceIdentifier" : {"Ref" : "IdentiferofDBinstance"},
                 "DBName" : {"Ref" : "NameofDB" },
