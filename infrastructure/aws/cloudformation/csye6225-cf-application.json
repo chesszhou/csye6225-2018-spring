@@ -122,24 +122,23 @@
                   "AttributeName" : "id",
                   "KeyType" : "HASH"
                 } ],
-            "TableName" : "csye6225",
+            "TableName" : "csye6225"
           }
         },
         "S3Bucket": {
             "Type" : "AWS::S3::Bucket",
             "Properties" : {
-              "BucketName" : {"Ref" : "NameOfBucket"},
+              "BucketName" : {"Ref" : "NameOfBucket"}
             }
-          }
         },
         "rdsInstance": {
             "Type" : "AWS::RDS::DBInstance",
             "Properties" :
               {
                 "DBInstanceClass" : {"Ref" : "ClassofDBInstance"},
-                "DBInstanceIdentifier" : {"Ref" : "IdentiferofDBinstance"}},
+                "DBInstanceIdentifier" : {"Ref" : "IdentiferofDBinstance"},
                 "DBName" : {"Ref" : "NameofDB" },
-                "MasterUsername" : {"Ref" : "usernameOfMaster"}},
+                "MasterUsername" : {"Ref" : "usernameOfMaster"},
                 "MasterUserPassword" : {"Ref" : "passwordOfMaster"},
                 "MultiAZ" : false,
                 "PubliclyAccessible" : false,
@@ -147,6 +146,6 @@
                 "EngineVersion" : {"Ref" : "versionOfEngine"},
                 "DBSubnetGroupName" : {"Ref" : "SubnetGroupNameofDB"}
               }
-      }
-    }
+            }
+          }
 }
