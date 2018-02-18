@@ -123,7 +123,8 @@
                   "KeyType" : "HASH"
                 } ],
             "TableName" : "csye6225",
-          },
+          }
+        },
         "S3Bucket": {
             "Type" : "AWS::S3::Bucket",
             "Properties" : {
