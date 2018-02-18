@@ -55,6 +55,10 @@
         "Default" : " ",
         "Description" : "The group name of DB subnet",
         "Type" : "String"
+      },
+      "IdofEC2Subnet": {
+        "Default" : " ",
+        "Description" : "EC2 subnet id"
       }
     },
     "Resources": {
@@ -64,6 +68,7 @@
                 "ImageId": {"Ref" : "IdOfImage"},
                 "InstanceType": {"Ref" : "TypeOfInstance"},
                 "DisableApiTermination": true,
+                "SubnetId": {"Ref" : "IdofEC2Subnet"},
                 "BlockDeviceMappings": [
                     {
                         "DeviceName": "/dev/sdm",
