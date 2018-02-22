@@ -1,4 +1,4 @@
-language: java
+alanguage: java
 jdk:
   - openjdk8
 
