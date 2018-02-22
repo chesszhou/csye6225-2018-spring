@@ -14,8 +14,30 @@
         <br />
     </p>
 
+</div>
 
+<div class="cal-sm-6">
+    <div class="well">
+        <h3><span class="fa fa-user"></span>Local</h3>
 
+        <p>
+            <img th:src="${#httpServletRequest.getParameter('picUrl')}"/><br/>
+        </p>
+
+    </div>
+
+    <div>
+        <form method="post" enctype="multipart/form-data" action="/uploadSuc">
+            <table>
+                <tr><td>Picture to upload:</td>
+                    <td><input type="file" name="file" /></td></tr>
+                <tr><td>About me:</td>
+                    <td><input type="text" name="about"/></td></tr>
+                <tr><td></td>
+                    <td><input type="submit" value="Upload"/></td></tr>
+            </table>
+        </form>
+    </div>
 
 </div>
 <!-- /.container -->

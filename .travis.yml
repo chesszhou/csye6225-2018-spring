@@ -12,6 +12,9 @@ branches:
 
 script:
   - ./webapp/gradlew build
+  - cd ..
+  - ls -al
+  - pwd
 
 after_success:
   - mkdir codedeploy
@@ -25,6 +28,17 @@ after_success:
   - ls -al
   - pwd
   - cd ..
+
+deploy:
+ - provider: s3
+   local_dir: codedeploy
+   bucket: code-deploy.csye6225zzy.com
+   region: us-east-1
+   skip-cleanup: true
+   access_key_id: $access_key_id
+   secret_access_key: $secret_access_key
+   on:
+      branch: travisLab
 
 notifications:
   email:
