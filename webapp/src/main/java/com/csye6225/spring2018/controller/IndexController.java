@@ -126,6 +126,12 @@ public class IndexController {
 
   }
 
+  @RequestMapping("/backHome")
+    public String backHome(){
+        logger.info("Go back to home.");
+        return "index";
+  }
+
   /**
   @PostMapping("/loginPost")
   public @ResponseBody

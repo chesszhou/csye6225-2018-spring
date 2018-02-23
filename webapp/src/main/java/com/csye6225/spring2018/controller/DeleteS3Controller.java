@@ -22,6 +22,7 @@ public class DeleteS3Controller {
     @RequestMapping(method = RequestMethod.POST, value = "/delete")
     public String handleS3Delete(
             @RequestParam("username") String userName,
+
             RedirectAttributes redirectAttributes, Model model){
         AWSCredentials credentials = new BasicAWSCredentials("AKIAJYRJRH6MYNFWM5CA", "Je05pI284KdSIZj2zlyL3QrPh1PPX+u+Fy16la18");
         AmazonS3 s3client = new AmazonS3Client(credentials);
@@ -40,6 +41,7 @@ public class DeleteS3Controller {
         }
         model.addAttribute("time", new Date());
         model.addAttribute("username", userName);
+        
         return "loggedin";
     }
 }
