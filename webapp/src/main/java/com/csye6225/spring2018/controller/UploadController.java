@@ -26,31 +26,39 @@ public class UploadController {
 //                                   @RequestParam("username") String username,
                                    RedirectAttributes redirectAttributes) {
         AWSCredentials credentials = new BasicAWSCredentials("AKIAJYRJRH6MYNFWM5CA", "Je05pI284KdSIZj2zlyL3QrPh1PPX+u+Fy16la18");
-          AmazonS3 s3client = new AmazonS3Client(credentials);
+        AmazonS3 s3client = new AmazonS3Client(credentials);
 
+        String fileName = file.getOriginalFilename();
+        System.out.println(fileName);
+        System.out.println(fileName);
+        System.out.println(fileName);
+        System.out.println(fileName);
+        System.out.println(fileName);
 
-          String bucketName = "s3.csye6225-spring2018-zhuzheny.me";
-          s3client.createBucket(bucketName);
-          String tempName = "hehe.jpeg";
+        String extension = "";
 
-          try{
-              InputStream is = file.getInputStream();
+        int i = fileName.lastIndexOf('.');
+        if (i > 0) {
+           extension = fileName.substring(i+1);
+        }
 
-              //save on s3 with public read access
-              s3client.putObject(new PutObjectRequest(bucketName, tempName, is, new ObjectMetadata()).withCannedAcl(CannedAccessControlList.PublicRead));
+        String bucketName = "s3.csye6225-spring2018-zhuzheny.me";
+        s3client.createBucket(bucketName);
+        String picName = "ahahha" + "." + extension;
 
-              //get a reference to the image object
-              S3Object s3object = s3client.getObject(new GetObjectRequest(
-                      bucketName, tempName));
-
-              //add to model
-              RedirectAttributes picUrl = redirectAttributes.addAttribute("picUrl", s3object.getObjectContent().getHttpRequest().getURI().toString());
-
-              System.out.println(s3object.getObjectContent().getHttpRequest().getURI().toString());
-          } catch (IOException e) {
-              e.printStackTrace();
-          }
-
-          return "loggedin";
+        try{
+            InputStream is = file.getInputStream();
+            //save on s3 with public read access
+            s3client.putObject(new PutObjectRequest(bucketName, picName, is, new ObjectMetadata()).withCannedAcl(CannedAccessControlList.PublicRead));
+            //get a reference to the image object
+            S3Object s3object = s3client.getObject(new GetObjectRequest(
+                    bucketName, picName));
+            //add to model
+            RedirectAttributes picUrl = redirectAttributes.addAttribute("picUrl", s3object.getObjectContent().getHttpRequest().getURI().toString());
+            System.out.println(s3object.getObjectContent().getHttpRequest().getURI().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "loggedin";
     }
 }
