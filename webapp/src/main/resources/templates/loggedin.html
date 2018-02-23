@@ -10,9 +10,9 @@
 <div class="container">
     <p>
         <h3>You have logged in!</h3>
-        <h3 th:text="'Login Time is:' + ${time}"></h3>>
-        <h3 th:text="'Your username is:' + ${username}"></h3>>
-        <h3 th:text="'Your image is:' + ${picURL}"></h3>>
+        <h3 th:text="'Login Time is:' + ${time}"></h3>
+        <h3 th:text="'Your username is:' + ${username}"></h3>
+        <h3 th:text="'Your image is:' + ${picURL}"></h3>
         <a href="/logout">Log out</a>
         <br />
     </p>
@@ -40,7 +40,7 @@
                     <td><img alt="Image Previewer" id="previewer"/></td></tr>
                 <tr><td>About me:
                     <p id="testcontent"></p>
-                    <span id="wordLengthcontent" style="font-family:Georgia;">0/140</span></td>
+                    <span id="wordLengthcontent" style="font-family:Georgia;">140 characters</span></td>
                     <td>
 
                         <textarea id="content" name="content" maxlength="140" rows="10" ></textarea></td></tr>
