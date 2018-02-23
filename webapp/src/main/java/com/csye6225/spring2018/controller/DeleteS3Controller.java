@@ -15,9 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 
-@Controller
+
 public class DeleteS3Controller {
-    @RequestMapping(method = RequestMethod.POST, value = "/deletes3")
+    @RequestMapping(method = RequestMethod.POST, value = "/delete")
     public String handleS3Delete(
             @RequestParam("username") String userName,
             RedirectAttributes redirectAttributes, Model model){
