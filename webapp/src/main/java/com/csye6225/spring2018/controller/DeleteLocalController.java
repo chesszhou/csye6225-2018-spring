@@ -16,6 +16,7 @@ import java.util.Date;
 public class DeleteLocalController {
     @RequestMapping(method = RequestMethod.POST, value = "/delete")
     public String handleS3Delete(@RequestParam("username") String userName,
+                                 @RequestParam("content") String content,
                                  RedirectAttributes redirectAttributes, Model model){
         File dir = new File(System.getProperty("user.home") + "/");
         File[] directoryListing = dir.listFiles();
@@ -51,6 +52,7 @@ public class DeleteLocalController {
         }
         model.addAttribute("time", new Date());
         model.addAttribute("username", userName);
+        model.addAttribute("content", content);
         return "loggedin";
     }
 }
