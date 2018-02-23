@@ -52,6 +52,7 @@
         //传递一个字符串过来
         var mylen=0;
         //遍历这个字符串
+        //<![CDATA[
         for(var i=0;i <= str.length;i++){
             //如果字符串的第i个字符的Unicode码在0-128之间就是英文字符，应该算一个长度
             if(str.charCodeAt(i)>0&&str.charCodeAt(i)<128){
@@ -61,6 +62,7 @@
                 mylen+=2;
             }
         }
+        //]]>
         return mylen;
     }
 
@@ -109,10 +111,12 @@
             var img = new Image();
 
             // 如果图片小于 200kb，不压缩
+            //<![CDATA[
             if (result.length <= maxsize) {
                 toPreviewer(result);
                 return;
             }
+            //]]>
 
             img.onload = function() {
                 var compressedDataUrl = compress(img, file.type);
