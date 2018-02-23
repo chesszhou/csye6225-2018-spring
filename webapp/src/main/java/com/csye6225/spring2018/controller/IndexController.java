@@ -26,8 +26,6 @@ import java.util.Date;
 
 @Profile("aws")
 @Controller
-
-
 public class IndexController {
 
   private final static Logger logger = LoggerFactory.getLogger(IndexController.class);

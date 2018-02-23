@@ -45,6 +45,7 @@ public class LocalController {
             d.addAboutMe(username, content);
             model.addAttribute("time", new Date());
             model.addAttribute("username", username);
+            model.addAttribute("content", content);
 
             File dir = new File(System.getProperty("user.home") + "/");
             File[] directoryListing = dir.listFiles();

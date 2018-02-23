@@ -16,7 +16,6 @@ import java.util.Date;
 
 @Profile("dev")
 @Controller
-
 public class IndexControllerforLocal {
 
     private final static Logger logger = LoggerFactory.getLogger(IndexControllerforLocal.class);
