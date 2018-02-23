@@ -82,6 +82,9 @@ public class Driver {
 
         for(String s: userArr){
             if(s.equals(username)){
+                if(getAboutMe(username) == null){
+                    return "";
+                }
                 return getAboutMe(username);
             }
         }
