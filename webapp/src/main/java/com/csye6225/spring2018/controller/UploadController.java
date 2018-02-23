@@ -49,6 +49,7 @@ public class UploadController {
 
         model.addAttribute("time", new Date());
         model.addAttribute("username", username);
+        model.addAttribute("content", content);
 
         String toRetrieve = "";
         S3Object retrievedPic = null;
