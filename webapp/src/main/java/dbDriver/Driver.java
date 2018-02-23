@@ -3,6 +3,7 @@ package dbDriver;
 import com.csye6225.spring2018.BCrypt;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Driver {
@@ -67,6 +68,25 @@ public class Driver {
             users.put(resultSet.getString("username"), resultSet.getString("aboutMe"));
         }
         return users.get(username);
+    }
+
+    public String searchForAboutMe(String username) throws SQLException {
+        resultSet = myStat.executeQuery("select * from user");
+        ArrayList<String> userArr = new ArrayList<>();
+
+        users = new HashMap<>();
+        while(resultSet.next()){
+            users.put(resultSet.getString("username"), resultSet.getString("aboutMe"));
+            userArr.add(resultSet.getString("username"));
+        }
+
+        for(String s: userArr){
+            if(s.equals(username)){
+                return getAboutMe(username);
+            }
+        }
+
+        return "Not Found Such User";
     }
 
     public boolean addAboutMe(String inusername, String content) throws SQLException {

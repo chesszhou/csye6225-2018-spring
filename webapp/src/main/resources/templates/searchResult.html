@@ -9,7 +9,7 @@
 <div class="container">
     <p>
         <br />
-        <h3 th:text="'Here is the profile of' + ${username}"></h3>
+        <h3 th:text="'Here is the profile of: ' + ${username}"></h3>
         <a href="/index">Go back to home</a>
         <br />
 
@@ -29,7 +29,7 @@
     </p>
 
     <p>
-        <textarea disabled th:value="${content}" rows="10"> </textarea>
+        <textarea disabled="disabled" th:text="${content}" rows="10"></textarea>
     </p>
 </div>
 <!-- /.container -->
