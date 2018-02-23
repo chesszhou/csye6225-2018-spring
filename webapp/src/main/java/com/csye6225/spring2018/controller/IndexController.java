@@ -69,6 +69,7 @@ public class IndexController {
     boolean falg = false;
     if(driver.isValidUser(email, password)){
       model.addAttribute("time", new Date());
+      model.addAttribute("username", email);
 
       return "loggedin";
     }

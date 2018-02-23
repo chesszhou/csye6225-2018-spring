@@ -7,6 +7,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:0.5.4.RELEASE"
     }
 }
 
@@ -15,6 +16,7 @@ apply plugin: 'eclipse-wtp'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
 apply plugin: 'idea'
+apply plugin: "io.spring.dependency-management"
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -35,6 +37,13 @@ idea {
     }
 }
 
+dependencyManagement {
+    imports {
+        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.136'
+    }
+}
+
+
 dependencies {
     // Spring Boot dependencies
     compile('org.springframework.boot:spring-boot-starter-actuator')
@@ -46,6 +55,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-security')
     compile ('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile 'com.amazonaws:aws-java-sdk-s3'
 
     compile('com.h2database:h2:+')
 
@@ -64,6 +74,8 @@ dependencies {
     testCompile('io.rest-assured:rest-assured:3.0.3')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
 }
 
 war {
