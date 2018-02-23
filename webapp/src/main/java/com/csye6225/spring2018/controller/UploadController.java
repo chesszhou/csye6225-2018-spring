@@ -29,11 +29,6 @@ public class UploadController {
         AmazonS3 s3client = new AmazonS3Client(credentials);
 
         String fileName = file.getOriginalFilename();
-        System.out.println(fileName);
-        System.out.println(fileName);
-        System.out.println(fileName);
-        System.out.println(fileName);
-        System.out.println(fileName);
 
         String extension = "";
 
