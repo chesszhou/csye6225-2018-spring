@@ -1,6 +1,15 @@
 package com.csye6225.spring2018.controller;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.iterable.S3Objects;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import dbDriver.Driver;
+import org.springframework.context.annotation.Profile;
 import org.springframework.ui.Model;
 import com.csye6225.spring2018.entity.*;
 import com.csye6225.spring2018.UpdateAccount;
@@ -11,10 +20,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.Date;
 
-
+@Profile("aws")
 @Controller
 public class IndexController {
 
@@ -66,9 +76,35 @@ public class IndexController {
     logger.info("Loading login page.");
     String email = request.getParameter("username");
     String password = request.getParameter("password");
-    boolean falg = false;
+    String content = driver.getAboutMe(email);
+
+
     if(driver.isValidUser(email, password)){
+
+      AWSCredentials credentials = new BasicAWSCredentials("AKIAJYRJRH6MYNFWM5CA", "Je05pI284KdSIZj2zlyL3QrPh1PPX+u+Fy16la18");
+      AmazonS3 s3client = new AmazonS3Client(credentials);
+      S3Object retrievedPic = null;
+      String toRetrieve = "";
+      for(S3ObjectSummary summary: S3Objects.inBucket(s3client, "s3.csye6225-spring2018-profilepics.me")){
+        String picName = summary.getKey();
+        int i = picName.lastIndexOf('.');
+        String ownerName = picName.substring(0, i);
+        if(ownerName.equals(email)){
+          toRetrieve = picName;
+          retrievedPic = s3client.getObject("s3.csye6225-spring2018-profilepics.me", toRetrieve);
+          break;
+        }
+      }
+
+      if(retrievedPic != null){
+        model.addAttribute("picURL",retrievedPic.getObjectContent().getHttpRequest().getURI().toString());
+      }else {
+        model.addAttribute("picURL", "http://via.placeholder.com/350x150");
+      }
+
       model.addAttribute("time", new Date());
+      model.addAttribute("username", email);
+      model.addAttribute("content", content);
 
       return "loggedin";
     }
@@ -76,11 +112,20 @@ public class IndexController {
 
   }
 
+
+
+
   @RequestMapping("/logout")
   public String logout(){
     logger.info("Loading logout page.");
     return "index";
 
+  }
+
+  @RequestMapping("/backHome")
+    public String backHome(){
+        logger.info("Go back to home.");
+        return "index";
   }
 
   /**
