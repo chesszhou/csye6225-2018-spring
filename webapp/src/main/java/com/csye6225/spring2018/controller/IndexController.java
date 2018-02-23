@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import dbDriver.Driver;
+import org.springframework.context.annotation.Profile;
 import org.springframework.ui.Model;
 import com.csye6225.spring2018.entity.*;
 import com.csye6225.spring2018.UpdateAccount;
@@ -19,11 +20,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.Date;
 
-
+@Profile("aws")
 @Controller
+
+
 public class IndexController {
 
   private final static Logger logger = LoggerFactory.getLogger(IndexController.class);
@@ -108,6 +112,9 @@ public class IndexController {
     return "false";
 
   }
+
+
+
 
   @RequestMapping("/logout")
   public String logout(){

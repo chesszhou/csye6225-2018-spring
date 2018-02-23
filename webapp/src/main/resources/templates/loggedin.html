@@ -12,6 +12,7 @@
         <h3>You have logged in!</h3>
         <h3 th:text="'Login Time is:' + ${time}"></h3>>
         <h3 th:text="'Your username is:' + ${username}"></h3>>
+        <h3 th:text="'Your image is:' + ${picURL}"></h3>>
         <a href="/logout">Log out</a>
         <br />
     </p>
@@ -23,7 +24,7 @@
         <h3><span class="fa fa-user"></span>My Profile</h3>
 
         <p>
-            <img th:src="${picURL} " alt="Image Holder"/><br/>
+            <img th:src="${picURL}" alt="Image Holder"/><br/>
         </p>
 
     </div>
