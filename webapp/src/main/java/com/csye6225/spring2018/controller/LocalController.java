@@ -28,8 +28,8 @@ public class LocalController {
         }
 
         try{
-            String pic_path = System.getProperty("user.home");
-            String newFileName = "/ahahha" + "." + extension;
+            String pic_path = System.getProperty("user.home") + "/";
+            String newFileName = "ahahha" + "." + extension;
             File newFile = new File(pic_path + newFileName);
             file.transferTo(newFile);
             System.out.println(newFileName);
