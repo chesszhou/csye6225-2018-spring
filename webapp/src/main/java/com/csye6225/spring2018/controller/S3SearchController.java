@@ -45,6 +45,8 @@ public class S3SearchController {
             }
         }
 
+
+
         if(retrievedPic != null){
             model.addAttribute("picURL",retrievedPic.getObjectContent().getHttpRequest().getURI().toString());
         }else {

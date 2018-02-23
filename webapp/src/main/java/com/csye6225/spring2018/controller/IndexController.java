@@ -96,6 +96,8 @@ public class IndexController {
         }
       }
 
+
+
       if(retrievedPic != null){
         model.addAttribute("picURL",retrievedPic.getObjectContent().getHttpRequest().getURI().toString());
       }else {
