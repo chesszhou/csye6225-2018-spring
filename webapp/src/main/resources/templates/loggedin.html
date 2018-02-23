@@ -44,7 +44,9 @@
                 <tr><td><input name="username" th:value="${username}" type="text" style="display: none"/></td></tr>
                 <tr><td><input name="picURL" th:value="${picURL}" type="text" style="display: none"/></td></tr>
                 <tr><td>Picture to upload:</td>
-                    <td><input type="file" name="filechooser"  /></td>
+
+                    <td><input type="file" name="filechooser" accept=".jpg,.png,.jpeg,.JPG"/></td>
+
                     </tr>
                 <tr><td>About me:
                     <p id="testcontent"></p>
