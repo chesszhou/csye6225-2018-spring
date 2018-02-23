@@ -66,7 +66,7 @@ public class IndexControllerforLocal {
         logger.info("Loading login page.");
         String email = request.getParameter("username");
         String password = request.getParameter("password");
-
+        String content = driver.getAboutMe(email);
 
         if (driver.isValidUser(email, password)) {
             File dir = new File(System.getProperty("user.home") + "/");
@@ -105,8 +105,9 @@ public class IndexControllerforLocal {
 
                 model.addAttribute("time", new Date());
                 model.addAttribute("username", email);
+                model.addAttribute("content", content);
 
-                return "loggedin";
+            return "loggedin";
             }
             return "false";
         }

@@ -77,10 +77,6 @@ public class IndexController {
     String email = request.getParameter("username");
     String password = request.getParameter("password");
     String content = driver.getAboutMe(email);
-    System.out.println("1111"+content);
-    System.out.println(content);
-    System.out.println(content);
-    System.out.println("1111"+content);
 
 
     if(driver.isValidUser(email, password)){
