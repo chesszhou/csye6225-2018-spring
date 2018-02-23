@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <div th:replace="fragments/header :: header"/>
 <body>
 <div th:replace="fragments/navigation :: navigation"/>
@@ -14,10 +15,143 @@
         <br />
     </p>
 
+</div>
 
+<div class="cal-sm-6">
+    <div class="well">
+        <h3><span class="fa fa-user"></span>My Profile</h3>
 
+        <p>
+            <img th:src="${#httpServletRequest.getParameter('picUrl')} " alt="Image Holder"/><br/>
+        </p>
+
+    </div>
+
+    <div>
+        <h3><span class="fa fa-user"></span>Update My Profile</h3>
+        <form method="post" enctype="multipart/form-data" action="/loggedin">
+            <table>
+                <tr><td>Picture to upload:</td>
+                    <td><input type="file" id="filechooser" /></td>
+                    <td><img alt="Image Previewer" id="previewer"/></td></tr>
+                <tr><td>About me:
+                    <p id="testcontent"></p>
+                    <span id="wordLengthcontent" style="font-family:Georgia;">0/50</span></td>
+                    <td>
+                        <textarea id="content" onkeyup="inputTest(this.id,this.value)" rows="10" ></textarea></td></tr>
+                <tr><td></td>
+                    <td><input type="submit" value="Upload"/></td></tr>
+            </table>
+        </form>
+    </div>
 
 </div>
+
+<script>
+    function getStrLength(str){
+        //传递一个字符串过来
+        var mylen=0;
+        //遍历这个字符串
+        for(var i=0;i <= str.length;i++){
+            //如果字符串的第i个字符的Unicode码在0-128之间就是英文字符，应该算一个长度
+            if(str.charCodeAt(i)>0&&str.charCodeAt(i)<128){
+                mylen++;
+            }else{
+                //否则算两个长度
+                mylen+=2;
+            }
+        }
+        return mylen;
+    }
+
+    //输入当字符数变更就触发这个函数
+    function inputTest(id,value) {
+        //先调getStrLength用统计当前文本框中所含文本的值，因为getStrLength统计出来的东西是英文字符长度，所以要除以2，强行转换为整形
+        //再补上/10替换wordLength中的文本，/应该被转义，否则在某些编译器中无法通过，例如Dreamwaver
+        if (id.equals("content")) {
+
+            document.getElementById("wordLength" + id).innerHTML = parseInt(getStrLength(value)) + "\/50";
+        }
+        if (id.equals("content")) {
+            //如果超过50个字，100个字符
+            if(parseInt(getStrLength(value))>100){
+                //那么把警告内容显示出来，并把其中的颜色设置为红色，当然，你在HTML那里设置也可以
+                document.getElementById("test"+id).style.display="block";
+                document.getElementById("test"+id).innerHTML="太长，请修改至50字之内";
+                document.getElementById("test"+id).style.color="#ff0000";
+            }
+            else{
+                //否则隐藏警告内容
+                document.getElementById("test"+id).innerHTML="";
+                document.getElementById("test"+id).style.display="none";
+            }
+        }
+    }
+</script>
+
+<script>
+    var filechooser = document.getElementById('filechooser');
+    var previewer = document.getElementById('previewer');
+
+    // 200 KB 对应的字节数
+    var maxsize = 200 * 1024;
+
+    filechooser.onchange = function() {
+        var files = this.files;
+        var file = files[0];
+
+        // 接受 jpeg, jpg, png 类型的图片
+        if (!/\/(?:jpeg|jpg|png)/i.test(file.type)) return;
+
+        var reader = new FileReader();
+        reader.onload = function() {
+            var result = this.result;
+            var img = new Image();
+
+            // 如果图片小于 200kb，不压缩
+            if (result.length <= maxsize) {
+                toPreviewer(result);
+                return;
+            }
+
+            img.onload = function() {
+                var compressedDataUrl = compress(img, file.type);
+                toPreviewer(compressedDataUrl);
+                img = null;
+            };
+
+            img.src = result;
+        };
+
+        reader.readAsDataURL(file);
+    };
+
+    function toPreviewer(dataUrl) {
+        previewer.src = dataUrl;
+        filechooser.value = '';
+    }
+
+    function compress(img, fileType) {
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext('2d');
+
+        var width = img.width;
+        var height = img.height;
+
+        canvas.width = width;
+        canvas.height = height;
+
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // 压缩
+        var base64data = canvas.toDataURL(fileType, 0.75);
+        canvas = ctx = null;
+
+        return base64data;
+    }
+</script>
 <!-- /.container -->
 
 <div th:replace="fragments/footer :: footer"/>
