@@ -23,7 +23,7 @@
         <h3><span class="fa fa-user"></span>My Profile</h3>
 
         <p>
-            <img th:src="${#httpServletRequest.getParameter('picUrl')} " alt="Image Holder"/><br/>
+            <img th:src="${picURL} " alt="Image Holder"/><br/>
         </p>
 
     </div>
@@ -33,6 +33,7 @@
         <form method="post" enctype="multipart/form-data" action="/loggedin">
             <table>
                 <tr><td><input name="username" th:value="${username}" type="text" style="display: none"/></td></tr>
+                <tr><td><input name="picURL" th:value="${picURL}" type="text" style="display: none"/></td></tr>
                 <tr><td>Picture to upload:</td>
                     <td><input type="file" name="filechooser"  /></td>
                     <td><img alt="Image Previewer" id="previewer"/></td></tr>
