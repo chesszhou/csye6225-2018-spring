@@ -59,7 +59,9 @@ public class UploadController {
         try{
             InputStream is = file.getInputStream();
             //save on s3 with public read access
-            s3client.putObject(new PutObjectRequest(bucketName, picName, is, new ObjectMetadata()).withCannedAcl(CannedAccessControlList.PublicRead));
+            if(!extension.isEmpty()){
+                s3client.putObject(new PutObjectRequest(bucketName, picName, is, new ObjectMetadata()).withCannedAcl(CannedAccessControlList.PublicRead));
+            }
             Driver d = new Driver();
             d.addAboutMe(username, content);
             for(S3ObjectSummary summary: S3Objects.inBucket(s3client, bucketName)){
@@ -79,11 +81,7 @@ public class UploadController {
                 model.addAttribute("picURL", "http://via.placeholder.com/350x150");
             }
             //get a reference to the image object
-            S3Object s3object = s3client.getObject(new GetObjectRequest(
-                    bucketName, picName));
-            //add to model
-            RedirectAttributes picUrl = redirectAttributes.addAttribute("picUrl", s3object.getObjectContent().getHttpRequest().getURI().toString());
-            System.out.println(s3object.getObjectContent().getHttpRequest().getURI().toString());
+
         } catch (IOException e) {
             e.printStackTrace();
         }

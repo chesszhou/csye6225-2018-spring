@@ -1,5 +1,6 @@
 package com.csye6225.spring2018.controller;
 
+import dbDriver.Driver;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -39,6 +41,8 @@ public class LocalController {
             String newFileName = username + "." + extension;
             File newFile = new File(pic_path + newFileName);
             file.transferTo(newFile);
+            Driver d = new Driver();
+            d.addAboutMe(username, content);
             model.addAttribute("time", new Date());
             model.addAttribute("username", username);
 
@@ -48,7 +52,7 @@ public class LocalController {
                 for(File eachFile: directoryListing) {
 
                     String picName = eachFile.getName();
-                    System.out.println("pic" + picName);
+
                     int j = picName.lastIndexOf('.');
                     if(j == -1){
                         continue;
@@ -74,14 +78,11 @@ public class LocalController {
                 }
 
             }
-            System.out.println(newFileName);
-            System.out.println(newFileName);
-            System.out.println(newFileName);
-            System.out.println(newFileName);
-            System.out.println(newFileName);
 
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
