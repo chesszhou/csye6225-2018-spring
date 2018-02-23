@@ -6,6 +6,7 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ import java.io.InputStream;
 import java.util.UUID;
 
 
+@Profile("aws")
 @Controller
 public class UploadController {
     @RequestMapping(method = RequestMethod.POST, value = "/loggedin")
