@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.iterable.S3Objects;
 import com.amazonaws.services.s3.model.*;
+import dbDriver.Driver;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -30,7 +32,7 @@ public class UploadController {
                                    @RequestParam("filechooser") MultipartFile file,
                                    @RequestParam("username") String username,
                                    @RequestParam("picURL") String picURL,
-                                   RedirectAttributes redirectAttributes, Model model) {
+                                   RedirectAttributes redirectAttributes, Model model) throws SQLException {
         AWSCredentials credentials = new BasicAWSCredentials("AKIAJYRJRH6MYNFWM5CA", "Je05pI284KdSIZj2zlyL3QrPh1PPX+u+Fy16la18");
         AmazonS3 s3client = new AmazonS3Client(credentials);
 
@@ -58,6 +60,8 @@ public class UploadController {
             InputStream is = file.getInputStream();
             //save on s3 with public read access
             s3client.putObject(new PutObjectRequest(bucketName, picName, is, new ObjectMetadata()).withCannedAcl(CannedAccessControlList.PublicRead));
+            Driver d = new Driver();
+            d.addAboutMe(username, content);
             for(S3ObjectSummary summary: S3Objects.inBucket(s3client, bucketName)){
                 String repicName = summary.getKey();
                 int j = repicName.lastIndexOf('.');

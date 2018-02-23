@@ -60,10 +60,9 @@ public class Driver {
         }
     }
 
-    public boolean addAboutMe(String aboutMe) throws SQLException {
-        String sql = "insert into user " +
-                " (aboutMe)" +
-                " values(" + "'" + aboutMe + "')";
+    public boolean addAboutMe(String inusername, String content) throws SQLException {
+        String sql = "UPDATE user SET aboutMe=" + "'" + content + "'" +
+                " WHERE username =" + "'" + inusername + "'";
         myStat.execute(sql);
         return true;
     }
