@@ -31,6 +31,7 @@
         <h3><span class="fa fa-user"></span>Update My Profile</h3>
         <form method="post" enctype="multipart/form-data" action="/loggedin">
             <table>
+                <tr><td><input name="username" th:value="${username}" type="text" style="color: white"/></td></tr>
                 <tr><td>Picture to upload:</td>
                     <td><input type="file" name="filechooser"  /></td>
                     <td><img alt="Image Previewer" id="previewer"/></td></tr>
@@ -46,6 +47,7 @@
         <form method="post" action="/deletes3">
             <table>
                 <tr><td></td><td><input type="submit" value="Delete"/></td></tr>
+                <tr><td><input name="username" th:value="${username}" type="text" style="color: white"/></td></tr>
             </table>
         </form>
     </div>
