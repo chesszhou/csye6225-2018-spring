@@ -60,6 +60,15 @@ public class Driver {
         }
     }
 
+    public String getAboutMe(String username) throws SQLException {
+        resultSet = myStat.executeQuery("select * from user");
+        users = new HashMap<>();
+        while(resultSet.next()){
+            users.put(resultSet.getString("username"), resultSet.getString("aboutMe"));
+        }
+        return users.get(username);
+    }
+
     public boolean addAboutMe(String inusername, String content) throws SQLException {
         String sql = "UPDATE user SET aboutMe=" + "'" + content + "'" +
                 " WHERE username =" + "'" + inusername + "'";

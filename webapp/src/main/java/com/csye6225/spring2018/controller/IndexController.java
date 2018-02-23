@@ -76,7 +76,11 @@ public class IndexController {
     logger.info("Loading login page.");
     String email = request.getParameter("username");
     String password = request.getParameter("password");
-
+    String content = driver.getAboutMe(email);
+    System.out.println("1111"+content);
+    System.out.println(content);
+    System.out.println(content);
+    System.out.println("1111"+content);
 
 
     if(driver.isValidUser(email, password)){
@@ -104,6 +108,7 @@ public class IndexController {
 
       model.addAttribute("time", new Date());
       model.addAttribute("username", email);
+      model.addAttribute("content", content);
 
       return "loggedin";
     }

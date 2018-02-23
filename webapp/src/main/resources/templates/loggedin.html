@@ -32,7 +32,7 @@
         </p>
 
         <p>
-        <textarea disabled th:value="${content}" rows="10"> </textarea>
+        <textarea disabled="disabled" th:text="${content}" rows="10"></textarea>
         </p>
 
     </div>
@@ -45,7 +45,7 @@
                 <tr><td><input name="picURL" th:value="${picURL}" type="text" style="display: none"/></td></tr>
                 <tr><td>Picture to upload:</td>
                     <td><input type="file" name="filechooser"  /></td>
-                    <td><img alt="Image Previewer" id="previewer"/></td></tr>
+                    </tr>
                 <tr><td>About me:
                     <p id="testcontent"></p>
                     <span id="wordLengthcontent" style="font-family:Georgia;">140 characters</span></td>
