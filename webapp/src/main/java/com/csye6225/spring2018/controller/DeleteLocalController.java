@@ -1,5 +1,6 @@
 package com.csye6225.spring2018.controller;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.File;
 import java.util.Date;
 
+@Profile("dev")
 @Controller
 public class DeleteLocalController {
     @RequestMapping(method = RequestMethod.POST, value = "/delete")
