@@ -30,6 +30,7 @@ public class DeleteS3Controller {
             String ownerName = picName.substring(0, i);
             if(ownerName.equals(userName)){
                 toDelete = picName;
+                break;
             }
         }
         if(!toDelete.equals("")){
