@@ -32,13 +32,13 @@
         <form method="post" enctype="multipart/form-data" action="/loggedin">
             <table>
                 <tr><td>Picture to upload:</td>
-                    <td><input type="file" id="filechooser" /></td>
+                    <td><input type="file" name="filechooser"  /></td>
                     <td><img alt="Image Previewer" id="previewer"/></td></tr>
                 <tr><td>About me:
                     <p id="testcontent"></p>
                     <span id="wordLengthcontent" style="font-family:Georgia;">0/50</span></td>
                     <td>
-                        <textarea id="content" onkeyup="inputTest(this.id,this.value)" rows="10" ></textarea></td></tr>
+                        <textarea id="content" name="content" onkeyup="inputTest(this.id,this.value)" rows="10" ></textarea></td></tr>
                 <tr><td></td>
                     <td><input type="submit" value="Upload"/></td></tr>
             </table>
