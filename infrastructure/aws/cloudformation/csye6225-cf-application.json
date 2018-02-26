@@ -182,7 +182,7 @@
     			"Type": "AWS::IAM::InstanceProfile",
     			"Properties": {
     				"Path": "/",
-    				"Roles": "CodeDeployEC2ServiceRole"
+    				"Roles":[ "CodeDeployEC2ServiceRole"]
     			}
     		},
         "rdsInstance": {
