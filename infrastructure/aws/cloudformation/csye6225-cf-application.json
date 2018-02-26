@@ -117,16 +117,14 @@
                           "Fn::Join":[
                             "",
                             [
-                              [
                                "echo 'JAVA_OPTS=\"${JAVA_OPTS} -Dspring.datasource.url=\\\"jdbc:mysql://",
                                {
                                    "Fn::GetAtt": [
-                                       "myDynamoDB",
+                                       "rdsInstance",
                                        "Endpoint.Address"
                                    ]
                                },
                                ":3306/csye6225\\\"\"' >> /etc/default/tomcat8"
-                             ]
                             ]
                           ]
                         }
@@ -194,5 +192,40 @@
                 "DBSubnetGroupName" : {"Ref" : "SubnetGroupNameofDB"}
               }
             }
+          },
+          "Outputs": {
+            "InstanceId": {
+                "Description": "InstanceId of the newly created EC2 instance",
+                "Value": {
+                    "Ref": "EC2Instance"
+                }
+            },
+            "AZ": {
+             "Description": "Availability Zone of the newly created EC2 instance",
+             "Value": {
+                 "Fn::GetAtt": [
+                     "EC2Instance",
+                     "AvailabilityZone"
+                 ]
+               }
+           },
+           "PublicDNS": {
+            "Description": "Public DNSName of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [
+                    "EC2Instance",
+                    "PublicDnsName"
+                ]
+            }
+          },
+          "PublicIP": {
+            "Description": "Public IP address of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [
+                    "EC2Instance",
+                    "PublicIp"
+                ]
+            }
           }
+        }
 }
