@@ -217,7 +217,7 @@
                 "ApplicationName": {
                     "Ref": "nameOfCodeDeployApplication"
                 },
-                "ComputePlatform": "EC2/On-Premises"
+                "ComputePlatform": "Server"
             }
         }
     }
