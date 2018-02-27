@@ -75,7 +75,10 @@
         "Default" : " ",
         "Description" : "Size of ec2 volume",
         "Type" : "String"
-      }
+      },
+      "KeyName": {
+			     "Type": "String"
+		  }
     },
     "Resources": {
         "EC2Instance": {
@@ -86,6 +89,9 @@
                 "DisableApiTermination": true,
                 "SubnetId": {"Ref" : "IdofEC2Subnet"},
                 "SecurityGroupIds": [{"Ref" : "IdofEC2SecurityGroups"}],
+                "KeyName": {
+          					"Ref": "KeyName"
+          			},
                 "BlockDeviceMappings": [
                     {
                         "DeviceName": "/dev/sdm",
