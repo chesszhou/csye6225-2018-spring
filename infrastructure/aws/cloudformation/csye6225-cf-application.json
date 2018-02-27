@@ -145,17 +145,7 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": {
-                            "Fn::Join": [
-                                "-",
-                                [
-                                    {
-                                        "Ref": "AWS::StackName"
-                                    },
-                                    "csye6225-EC2Instance"
-                                ]
-                            ]
-                        }
+                        "Value": "csye6225-EC2Instance"                            
                     }
                 ]
             }
