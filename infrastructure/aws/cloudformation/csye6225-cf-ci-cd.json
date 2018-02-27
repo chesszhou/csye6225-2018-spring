@@ -1,3 +1,5 @@
+
+
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Parameters": {
@@ -14,6 +16,26 @@
         "nameOfCodeDeployApplication": {
             "Default": " ",
             "Description": "Name for Code-Deploy Application",
+            "Type": "String"
+        },
+        "nameOfDeploymentGroup": {
+            "Default": " ",
+            "Description": "Name for Deployment Group",
+            "Type": "String"
+        },
+        "TagKey": {
+            "Default": " ",
+            "Description": "Filter instances with this key.",
+            "Type": "String"
+        },
+        "TagValue": {
+            "Default": " ",
+            "Description": "Filter instances with this tag value.",
+            "Type": "String"
+        },
+        "CodeDeployRoleArn": {
+            "Default": " ",
+            "Description": "A service role Amazon Resource Name (ARN) that grants AWS CodeDeploy permission to make calls to AWS services on your behalf. ",
             "Type": "String"
         }
     },
@@ -218,6 +240,34 @@
                     "Ref": "nameOfCodeDeployApplication"
                 },
                 "ComputePlatform": "Server"
+            }
+        },
+        "DeploymentGroup": {
+            "Type": "AWS::CodeDeploy::DeploymentGroup",
+            "Properties": {
+                "ApplicationName": {
+                    "Ref": "nameOfCodeDeployApplication"
+                },
+                "DeploymentGroupName": {
+                    "Ref": "nameOfDeploymentGroup"
+                },
+                "Ec2TagFilters": [
+                    {
+                        "Key": {
+                            "Ref": "TagKey"
+                        },
+                        "Value": {
+                            "Ref": "TagValue"
+                        },
+                        "Type": "KEY_AND_VALUE"
+                    }
+                ],
+                "DeploymentStyle": {
+                    "DeploymentType": "IN_PLACE"
+                },
+                "ServiceRoleArn": {
+                    "Ref": "CodeDeployRoleArn"
+                }
             }
         }
     }
