@@ -24,7 +24,7 @@ public class IndexControllerforLocal {
 
     public IndexControllerforLocal() {
         accountDirectory = new AccountDirectory();
-//        this.driver = new Driver();
+        this.driver = new Driver();
     }
 
     @RequestMapping("/")

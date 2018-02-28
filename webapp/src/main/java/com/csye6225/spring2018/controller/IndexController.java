@@ -37,7 +37,7 @@ public class IndexController {
 
   public IndexController() {
     accountDirectory = new AccountDirectory();
-//    this.driver = new Driver();
+    this.driver = new Driver();
   }
 
   @RequestMapping("/")
