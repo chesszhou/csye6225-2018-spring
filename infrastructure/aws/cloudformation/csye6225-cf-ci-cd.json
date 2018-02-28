@@ -260,12 +260,9 @@
                         "Type": "KEY_AND_VALUE"
                     }
                 ],
-                "DeploymentStyle": {
-                    "DeploymentType": "IN_PLACE"
-                },
                 "ServiceRoleArn": {
-                    "Ref": "CodeDeployRoleArn"
-                }
+                  "Fn::GetAtt" : ["RoleForCodeDeploy", "Arn"]
+                 }
             },
             "DependsOn": [
                 "CodeDeployApplication"
