@@ -1,5 +1,3 @@
-
-
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Parameters": {
@@ -241,6 +239,37 @@
                 },
                 "ComputePlatform": "Server"
             }
+        },
+        "DeploymentGroup": {
+            "Type": "AWS::CodeDeploy::DeploymentGroup",
+            "Properties": {
+                "ApplicationName": {
+                    "Ref": "nameOfCodeDeployApplication"
+                },
+                "DeploymentGroupName": {
+                    "Ref": "nameOfDeploymentGroup"
+                },
+                "Ec2TagFilters": [
+                    {
+                        "Key": {
+                            "Ref": "TagKey"
+                        },
+                        "Value": {
+                            "Ref": "TagValue"
+                        },
+                        "Type": "KEY_AND_VALUE"
+                    }
+                ],
+                "DeploymentStyle": {
+                    "DeploymentType": "IN_PLACE"
+                },
+                "ServiceRoleArn": {
+                    "Ref": "CodeDeployRoleArn"
+                }
+            },
+            "DependsOn": [
+                "CodeDeployApplication"
+            ]
         }
     }
 }
