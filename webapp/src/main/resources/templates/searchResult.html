@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: header"/>
+<body>
+<div th:replace="fragments/navigation :: navigation"/>
+
+
+<!-- Page Content -->
+<div class="container">
+    <p>
+        <br />
+
+        <h3 th:text="'Here is the profile of' + ${username}"></h3>
+        <a href="/backHome">Go back to home</a>
+
+        <br />
+
+    </p>
+
+</div>
+
+<div class="well">
+    <h3><span class="fa fa-user"></span>My Profile</h3>
+
+    <p>
+        <img th:src="${picURL}" alt="Image Holder"/><br/>
+    </p>
+
+    <p>
+        <h4><span> About me:</span></h4>
+    </p>
+
+    <p>
+        <textarea disabled="disabled" th:text="${content}" rows="10"></textarea>
+    </p>
+</div>
+<!-- /.container -->
+
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

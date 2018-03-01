@@ -1,35 +1,151 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+      "IdOfImage": {
+        "Default" : " ",
+        "Description" : "ImageId of EC2 Instance",
+        "Type": "String"
+      },
+      "TypeOfInstance": {
+        "Default" : " ",
+        "Description" : "InstanceType of EC2 Instance",
+        "Type": "String"
+      },
+      "NameOfBucket": {
+        "Default" : " ",
+        "Description" : "Name of S3 Bucket",
+        "Type": "String"
+      },
+      "ClassofDBInstance": {
+        "Default" : " ",
+        "Description" : "Class of Db Instance",
+        "Type": "String"
+      },
+      "IdentiferofDBinstance": {
+        "Default" : " ",
+        "Description" : "Identifer of DBinstance",
+        "Type" : "String"
+      },
+      "NameofDB": {
+        "Default" : " ",
+        "Description" : "Name of Database",
+        "Type" : "String"
+      },
+      "usernameOfMaster": {
+        "Default" : " ",
+        "Description" : "username",
+        "Type" : "String"
+      },
+      "passwordOfMaster": {
+        "Default" : " ",
+        "Description" : "password",
+        "Type" : "String"
+      },
+      "TypeofEngine": {
+        "Default" : " ",
+        "Description" : "Engine Type",
+        "Type" : "String"
+      },
+      "versionOfEngine": {
+        "Default" : " ",
+        "Description" : "Engine Version",
+        "Type" : "String"
+      },
+      "SubnetGroupNameofDB": {
+        "Default" : " ",
+        "Description" : "The group name of DB subnet",
+        "Type" : "String"
+      },
+      "IdofEC2Subnet": {
+        "Default" : " ",
+        "Description" : "EC2 subnet id",
+        "Type" : "String"
+      },
+      "IdofEC2SecurityGroups" : {
+        "Default" : " ",
+        "Description" : "EC2 SG id",
+        "Type" : "String"
+      },
+      "TypeofVolume" : {
+        "Default" : " ",
+        "Description" : "Type of ec2 volume",
+        "Type" : "String"
+      },
+      "SizeofVolume" : {
+        "Default" : " ",
+        "Description" : "Size of ec2 volume",
+        "Type" : "String"
+      },
+      "KeyName": {
+			    "Type": "String"
+		  }
+    },
     "Resources": {
         "EC2Instance": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
-                "ImageId": "ami-66506c1c",
-                "InstanceType": "t2.micro",
+                "ImageId": {"Ref" : "IdOfImage"},
+                "InstanceType": {"Ref" : "TypeOfInstance"},
                 "DisableApiTermination": true,
+                "SubnetId": {"Ref" : "IdofEC2Subnet"},
+                "SecurityGroupIds": [{"Ref" : "IdofEC2SecurityGroups"}],
+                "KeyName": {
+          					"Ref": "KeyName"
+          			},
                 "BlockDeviceMappings": [
                     {
                         "DeviceName": "/dev/sdm",
                         "Ebs": {
-                            "VolumeType": "gp2",
-                            "VolumeSize": "16"
+                            "VolumeType": {"Ref" : "TypeofVolume"},
+                            "VolumeSize": {"Ref" : "SizeofVolume"}
                         }
                     }
                 ],
+                "IamInstanceProfile": {
+					             "Ref": "CodeDeployEC2ServiceRoleInstanceProfile"
+				        },
+                "UserData": {
+                  "Fn::Base64": {
+                    "Fn::Join": [
+                      "\n",
+                      [
+                        "#!/bin/bash -xe ",
+                        "sudo apt-get update ",
+                        "sudo apt-get install openjdk-8-jdk -y",
+                        "sudo apt-get install ruby -y ",
+                        "sudo apt-get install wget -y ",
+                        "sudo apt-get install python -y ",
+                        "sudo apt-get update ",
+                        "sudo wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install ",
+                        "sudo chmod +x ./install ",
+                        "sudo ./install auto ",
+                        "sudo service codedeploy-agent start ",
+                        "sudo apt-get install tomcat8 -y ",
+                        "sudo echo \"JAVA_OPTS=\\\"\\${JAVA_OPTS} -Dspring.datasource.username=csye6225master -Dspring.datasource.password=csye6225password  -Dspring.profiles.active=aws\\\"\" >> /etc/default/tomcat8 ",
+                        {
+                          "Fn::Join":[
+                            "",
+                            [
+                               "echo 'JAVA_OPTS=\"${JAVA_OPTS} -Dspring.datasource.url=\\\"jdbc:mysql://",
+                               {
+                                   "Fn::GetAtt": [
+                                       "rdsInstance",
+                                       "Endpoint.Address"
+                                   ]
+                               },
+                               ":3306/csye6225\\\"\"' >> /etc/default/tomcat8"
+                            ]
+                          ]
+                        },
+                        "sudo service tomcat8 restart "
+                      ]
+                    ]
+                  }
+                },
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": {
-                            "Fn::Join": [
-                                "-",
-                                [
-                                    {
-                                        "Ref": "AWS::StackName"
-                                    },
-                                    "csye6225-EC2Instance"
-                                ]
-                            ]
-                        }
+                        "Value": "csye6225-EC2Instance"
                     }
                 ]
             }
@@ -38,45 +154,84 @@
             "Type" : "AWS::DynamoDB::Table",
             "Properties" : {
             "AttributeDefinitions" : [ {
-              "AttributeName" : "ArtistId",
+              "AttributeName" : "id",
               "AttributeType" : "S"
-            },
-            {
-              "AttributeName" : "Concert",
-              "AttributeType" : "S"
-            },
-            {
-              "AttributeName" : "TicketSales",
-              "AttributeType" : "S"
-            } ],
+            }],
             "KeySchema" : [ {
                   "AttributeName" : "id",
-                  "KeyType" : "String"
+                  "KeyType" : "HASH"
                 } ],
-            "TableName" : "csye6225",
-          },
+          "ProvisionedThroughput" : {
+          "ReadCapacityUnits" : "5",
+          "WriteCapacityUnits" : "5"
+        },
+            "TableName" : "csye6225"
+          }
+        },
         "S3Bucket": {
             "Type" : "AWS::S3::Bucket",
             "Properties" : {
-              "BucketName" : "s3.csye6225-spring2018-zhuzheny.me.",
+              "BucketName" : {"Ref" : "NameOfBucket"}
             }
-          }
         },
+        "CodeDeployEC2ServiceRoleInstanceProfile": {
+    			"Type": "AWS::IAM::InstanceProfile",
+    			"Properties": {
+    				"Path": "/",
+    				"Roles":[ "CodeDeployEC2ServiceRole"]
+    			}
+    		},
         "rdsInstance": {
             "Type" : "AWS::RDS::DBInstance",
             "Properties" :
               {
-                "DBInstanceClass" : "db.t2.medium",
-                "DBInstanceIdentifier" : "csye6225-spring2018",
-                "DBName" : "csye6225",
-                "MasterUsername" : "csye6225master",
-                "MasterUserPassword" : "csye6225password",
+                "AllocatedStorage": "10",
+                "DBInstanceClass" : {"Ref" : "ClassofDBInstance"},
+                "DBInstanceIdentifier" : {"Ref" : "IdentiferofDBinstance"},
+                "DBName" : {"Ref" : "NameofDB" },
+                "MasterUsername" : {"Ref" : "usernameOfMaster"},
+                "MasterUserPassword" : {"Ref" : "passwordOfMaster"},
                 "MultiAZ" : false,
                 "PubliclyAccessible" : false,
-                "Engine" : "MySQL",
-                "EngineVersion" : "5.6.37",
-                "DBSubnetGroupName" : "",
+                "Engine" : {"Ref" : "TypeofEngine"},
+                "EngineVersion" : {"Ref" : "versionOfEngine"},
+                "DBSubnetGroupName" : {"Ref" : "SubnetGroupNameofDB"}
               }
-      }
-    }
+            }
+          },
+          "Outputs": {
+            "InstanceId": {
+                "Description": "InstanceId of the newly created EC2 instance",
+                "Value": {
+                    "Ref": "EC2Instance"
+                }
+            },
+            "AZ": {
+             "Description": "Availability Zone of the newly created EC2 instance",
+             "Value": {
+                 "Fn::GetAtt": [
+                     "EC2Instance",
+                     "AvailabilityZone"
+                 ]
+               }
+           },
+           "PublicDNS": {
+            "Description": "Public DNSName of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [
+                    "EC2Instance",
+                    "PublicDnsName"
+                ]
+            }
+          },
+          "PublicIP": {
+            "Description": "Public IP address of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [
+                    "EC2Instance",
+                    "PublicIp"
+                ]
+            }
+          }
+        }
 }
