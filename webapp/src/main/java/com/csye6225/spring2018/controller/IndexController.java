@@ -85,13 +85,13 @@ public class IndexController {
       AmazonS3 s3client = new AmazonS3Client(credentials);
       S3Object retrievedPic = null;
       String toRetrieve = "";
-      for(S3ObjectSummary summary: S3Objects.inBucket(s3client, "s3.csye6225-spring2018-profilepics.me")){
+      for(S3ObjectSummary summary: S3Objects.inBucket(s3client, "6225-spring-profile-new")){
         String picName = summary.getKey();
         int i = picName.lastIndexOf('.');
         String ownerName = picName.substring(0, i);
         if(ownerName.equals(email)){
           toRetrieve = picName;
-          retrievedPic = s3client.getObject("s3.csye6225-spring2018-profilepics.me", toRetrieve);
+          retrievedPic = s3client.getObject("6225-spring-profile-new", toRetrieve);
           break;
         }
       }

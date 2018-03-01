@@ -45,7 +45,7 @@ public class UploadController {
            extension = fileName.substring(i+1);
         }
 
-        String bucketName = "s3.csye6225-spring2018-profilepics.me";
+        String bucketName = "6225-spring-profile-new";
         s3client.createBucket(bucketName);
         String picName = username + "." + extension;
 
