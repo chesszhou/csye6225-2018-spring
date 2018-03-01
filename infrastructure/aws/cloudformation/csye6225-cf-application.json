@@ -75,7 +75,10 @@
         "Default" : " ",
         "Description" : "Size of ec2 volume",
         "Type" : "String"
-      }
+      },
+      "KeyName": {
+			    "Type": "String"
+		  }
     },
     "Resources": {
         "EC2Instance": {
@@ -86,6 +89,9 @@
                 "DisableApiTermination": true,
                 "SubnetId": {"Ref" : "IdofEC2Subnet"},
                 "SecurityGroupIds": [{"Ref" : "IdofEC2SecurityGroups"}],
+                "KeyName": {
+          					"Ref": "KeyName"
+          			},
                 "BlockDeviceMappings": [
                     {
                         "DeviceName": "/dev/sdm",
@@ -95,20 +101,51 @@
                         }
                     }
                 ],
+                "IamInstanceProfile": {
+					             "Ref": "CodeDeployEC2ServiceRoleInstanceProfile"
+				        },
+                "UserData": {
+                  "Fn::Base64": {
+                    "Fn::Join": [
+                      "\n",
+                      [
+                        "#!/bin/bash -xe ",
+                        "sudo apt-get update ",
+                        "sudo apt-get install openjdk-8-jdk -y",
+                        "sudo apt-get install ruby -y ",
+                        "sudo apt-get install wget -y ",
+                        "sudo apt-get install python -y ",
+                        "sudo apt-get update ",
+                        "sudo wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install ",
+                        "sudo chmod +x ./install ",
+                        "sudo ./install auto ",
+                        "sudo service codedeploy-agent start ",
+                        "sudo apt-get install tomcat8 -y ",
+                        "sudo echo \"JAVA_OPTS=\\\"\\${JAVA_OPTS} -Dspring.datasource.username=csye6225master -Dspring.datasource.password=csye6225password  -Dspring.profiles.active=aws\\\"\" >> /etc/default/tomcat8 ",
+                        {
+                          "Fn::Join":[
+                            "",
+                            [
+                               "echo 'JAVA_OPTS=\"${JAVA_OPTS} -Dspring.datasource.url=\\\"jdbc:mysql://",
+                               {
+                                   "Fn::GetAtt": [
+                                       "rdsInstance",
+                                       "Endpoint.Address"
+                                   ]
+                               },
+                               ":3306/csye6225\\\"\"' >> /etc/default/tomcat8"
+                            ]
+                          ]
+                        },
+                        "sudo service tomcat8 restart "
+                      ]
+                    ]
+                  }
+                },
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": {
-                            "Fn::Join": [
-                                "-",
-                                [
-                                    {
-                                        "Ref": "AWS::StackName"
-                                    },
-                                    "csye6225-EC2Instance"
-                                ]
-                            ]
-                        }
+                        "Value": "csye6225-EC2Instance"
                     }
                 ]
             }
@@ -137,6 +174,13 @@
               "BucketName" : {"Ref" : "NameOfBucket"}
             }
         },
+        "CodeDeployEC2ServiceRoleInstanceProfile": {
+    			"Type": "AWS::IAM::InstanceProfile",
+    			"Properties": {
+    				"Path": "/",
+    				"Roles":[ "CodeDeployEC2ServiceRole"]
+    			}
+    		},
         "rdsInstance": {
             "Type" : "AWS::RDS::DBInstance",
             "Properties" :
@@ -154,5 +198,40 @@
                 "DBSubnetGroupName" : {"Ref" : "SubnetGroupNameofDB"}
               }
             }
+          },
+          "Outputs": {
+            "InstanceId": {
+                "Description": "InstanceId of the newly created EC2 instance",
+                "Value": {
+                    "Ref": "EC2Instance"
+                }
+            },
+            "AZ": {
+             "Description": "Availability Zone of the newly created EC2 instance",
+             "Value": {
+                 "Fn::GetAtt": [
+                     "EC2Instance",
+                     "AvailabilityZone"
+                 ]
+               }
+           },
+           "PublicDNS": {
+            "Description": "Public DNSName of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [
+                    "EC2Instance",
+                    "PublicDnsName"
+                ]
+            }
+          },
+          "PublicIP": {
+            "Description": "Public IP address of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [
+                    "EC2Instance",
+                    "PublicIp"
+                ]
+            }
           }
+        }
 }

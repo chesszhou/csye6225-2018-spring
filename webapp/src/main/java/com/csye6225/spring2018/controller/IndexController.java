@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.iterable.S3Objects;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.csye6225.spring2018.S3Configure;
 import dbDriver.Driver;
 import org.springframework.context.annotation.Profile;
 import org.springframework.ui.Model;
@@ -31,6 +32,8 @@ public class IndexController {
   private final static Logger logger = LoggerFactory.getLogger(IndexController.class);
   private AccountDirectory accountDirectory;
   private Driver driver;
+  S3Configure s3Configure = new S3Configure();
+
 
   public IndexController() {
     accountDirectory = new AccountDirectory();
@@ -81,20 +84,24 @@ public class IndexController {
 
     if(driver.isValidUser(email, password)){
 
-      AWSCredentials credentials = new BasicAWSCredentials("AKIAJYRJRH6MYNFWM5CA", "Je05pI284KdSIZj2zlyL3QrPh1PPX+u+Fy16la18");
+      AWSCredentials credentials = new BasicAWSCredentials(s3Configure.getAccessKey(), s3Configure.getSecretKey());
       AmazonS3 s3client = new AmazonS3Client(credentials);
       S3Object retrievedPic = null;
       String toRetrieve = "";
-      for(S3ObjectSummary summary: S3Objects.inBucket(s3client, "s3.csye6225-spring2018-profilepics.me")){
+
+      for(S3ObjectSummary summary: S3Objects.inBucket(s3client, s3Configure.getBucketName())){
         String picName = summary.getKey();
         int i = picName.lastIndexOf('.');
         String ownerName = picName.substring(0, i);
         if(ownerName.equals(email)){
           toRetrieve = picName;
-          retrievedPic = s3client.getObject("s3.csye6225-spring2018-profilepics.me", toRetrieve);
+
+          retrievedPic = s3client.getObject(s3Configure.getBucketName(), toRetrieve);
           break;
         }
       }
+
+
 
       if(retrievedPic != null){
         model.addAttribute("picURL",retrievedPic.getObjectContent().getHttpRequest().getURI().toString());

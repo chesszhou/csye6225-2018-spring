@@ -117,4 +117,10 @@ public class IndexControllerforLocal {
         logger.info("Loading logout page.");
         return "index";
     }
+
+    @RequestMapping("/backHome")
+    public String backHome(){
+        logger.info("Go back to home.");
+        return "index";
+    }
 }
