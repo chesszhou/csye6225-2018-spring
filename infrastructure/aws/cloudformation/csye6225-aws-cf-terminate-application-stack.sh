@@ -5,7 +5,7 @@ SUCCESS=1
 EC2INSTANCEID=""
 STATUS=1
 
-EC2INSTANCEID=$(aws ec2 describe-instances --filters Name=tag:Name,Values=$STACK_NAME-csye6225-EC2Instance | jq -r '.Reservations[].Instances[].InstanceId')
+EC2INSTANCEID=$(aws ec2 describe-instances --filters Name=tag:Name,Values=csye6225-EC2Instance | jq -r '.Reservations[].Instances[].InstanceId')
 if [ -z "$EC2INSTANCEID" ]; then
   echo "The stack you entered does not exist or there are no ec2 instance in entered stack!"
 else
