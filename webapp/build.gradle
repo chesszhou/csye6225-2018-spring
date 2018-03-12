@@ -52,7 +52,10 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.session:spring-session')
     compile('org.springframework.boot:spring-boot-starter-web')
+
+    //JPA Data(We are going to use Repositories, Entities, Hibernate, etc...)
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
     compile('org.springframework.boot:spring-boot-starter-security')
     compile ('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile 'com.amazonaws:aws-java-sdk-s3'
@@ -67,6 +70,8 @@ dependencies {
 
 
     runtime('org.springframework.boot:spring-boot-devtools')
+
+    //Use Mysql Connector-J
     runtime('mysql:mysql-connector-java')
 
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
