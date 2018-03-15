@@ -1,6 +1,8 @@
 package com.csye6225.spring2018.controller;
 
-import dbDriver.Driver;
+import com.csye6225.spring2018.Repo.UserRepository;
+import com.csye6225.spring2018.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,15 +14,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Date;
-import java.util.UUID;
+
 
 @Profile("dev")
 @Controller
-
-
 public class LocalController {
+
+    @Autowired
+    private UserRepository userRepository;
+
     @RequestMapping(method = RequestMethod.POST, value = "/loggedin")
     public String handleFileUpload(@RequestParam("content") String content,
                                    @RequestParam("filechooser") MultipartFile file,
@@ -41,8 +44,11 @@ public class LocalController {
             String newFileName = username + "." + extension;
             File newFile = new File(pic_path + newFileName);
             file.transferTo(newFile);
-            Driver d = new Driver();
-            d.addAboutMe(username, content);
+
+            User existingUser = userRepository.findByUsername(username);
+            existingUser.setAboutMe(content);
+            userRepository.save(existingUser);
+
             model.addAttribute("time", new Date());
             model.addAttribute("username", username);
             model.addAttribute("content", content);
@@ -82,8 +88,6 @@ public class LocalController {
 
 
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
             e.printStackTrace();
         }
 

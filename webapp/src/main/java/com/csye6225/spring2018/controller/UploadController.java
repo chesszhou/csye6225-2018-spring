@@ -1,15 +1,15 @@
 package com.csye6225.spring2018.controller;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.iterable.S3Objects;
 import com.amazonaws.services.s3.model.*;
-import com.csye6225.spring2018.S3Configure;
-import dbDriver.Driver;
+import com.csye6225.spring2018.Repo.UserRepository;
+import com.csye6225.spring2018.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,26 +17,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.UUID;
 
 
 @Profile("aws")
 @Controller
 public class UploadController {
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private Environment env;
+
     @RequestMapping(method = RequestMethod.POST, value = "/loggedin")
     public String handleFileUpload(@RequestParam("content") String content,
                                    @RequestParam("filechooser") MultipartFile file,
                                    @RequestParam("username") String username,
                                    @RequestParam("picURL") String picURL,
                                    RedirectAttributes redirectAttributes, Model model) throws SQLException {
-        S3Configure s3Configure = new S3Configure();
-        AWSCredentials credentials = new BasicAWSCredentials(s3Configure.getAccessKey(), s3Configure.getSecretKey());
-        AmazonS3 s3client = new AmazonS3Client(credentials);
+
+        AmazonS3 s3client = AmazonS3ClientBuilder.standard().build();
 
         String fileName = file.getOriginalFilename();
 
@@ -47,8 +50,7 @@ public class UploadController {
            extension = fileName.substring(i+1);
         }
 
-
-        String bucketName = s3Configure.getBucketName();
+        String bucketName = env.getProperty("bucket.name");
         s3client.createBucket(bucketName);
         String picName = username + "." + extension;
 
@@ -66,8 +68,11 @@ public class UploadController {
             if(!extension.isEmpty()){
                 s3client.putObject(new PutObjectRequest(bucketName, picName, is, new ObjectMetadata()).withCannedAcl(CannedAccessControlList.PublicRead));
             }
-            Driver d = new Driver();
-            d.addAboutMe(username, content);
+
+            User existingUser = userRepository.findByUsername(username);
+            existingUser.setAboutMe(content);
+            userRepository.save(existingUser);
+
             for(S3ObjectSummary summary: S3Objects.inBucket(s3client, bucketName)){
                 String repicName = summary.getKey();
                 int j = repicName.lastIndexOf('.');
