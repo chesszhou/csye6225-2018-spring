@@ -66,11 +66,6 @@
         "Description" : "EC2 SG id",
         "Type" : "String"
       },
-      "IdofRDSSecurityGroups" : {
-        "Default" : " ",
-        "Description" : "RDS SG id",
-        "Type" : "String"
-      },
       "TypeofVolume" : {
         "Default" : " ",
         "Description" : "Type of ec2 volume",
@@ -200,8 +195,15 @@
                 "PubliclyAccessible" : false,
                 "Engine" : {"Ref" : "TypeofEngine"},
                 "EngineVersion" : {"Ref" : "versionOfEngine"},
-                "DBSubnetGroupName" : {"Ref" : "SubnetGroupNameofDB"},
-                "VPCSecurityGroups": [{"Ref" : "IdofRDSSecurityGroups"}]
+                "DBSubnetGroupName" : {"Ref" : "SubnetGroupNameofDB"}
+              }
+            },
+        "MySNSTopic" : {
+            "Type" : "AWS::SNS::Topic",
+            "Properties" :
+              {
+                "DisplayName" : "Password_Reset_Topic",
+                "TopicName" : "MySNSTopic"
               }
             }
           },
