@@ -66,6 +66,11 @@
         "Description" : "EC2 SG id",
         "Type" : "String"
       },
+      "IdofRDSSecurityGroups" : {
+        "Default" : " ",
+        "Description" : "RDS SG id",
+        "Type" : "String"
+      },
       "TypeofVolume" : {
         "Default" : " ",
         "Description" : "Type of ec2 volume",
@@ -165,7 +170,11 @@
           "ReadCapacityUnits" : "5",
           "WriteCapacityUnits" : "5"
         },
-            "TableName" : "csye6225"
+            "TableName" : "csye6225",
+            "TimeToLiveSpecification" : {
+              "AttributeName" : "ttl",
+              "Enabled" : true
+            }
           }
         },
         "S3Bucket": {
