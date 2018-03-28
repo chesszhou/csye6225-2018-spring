@@ -204,7 +204,8 @@
                 "PubliclyAccessible" : false,
                 "Engine" : {"Ref" : "TypeofEngine"},
                 "EngineVersion" : {"Ref" : "versionOfEngine"},
-                "DBSubnetGroupName" : {"Ref" : "SubnetGroupNameofDB"}
+                "DBSubnetGroupName" : {"Ref" : "SubnetGroupNameofDB"},
+                "VPCSecurityGroups": [{"Ref" : "IdofRDSSecurityGroups"}]
               }
             },
         "MySNSTopic" : {
