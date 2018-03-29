@@ -6,7 +6,7 @@ Zhenyu Zhu: zhu.zheny@husky.neu.edu
 Beiwen Guo:  guo.bei@husky.neu.edu
 
 #### Software Configurations
-Operating System: Ubantu 16.04.3  
+Operating System: Ubuntu 16.04.3  
 IDE: IntelliJ  
 Servlet Application: Tomcat 8  
 Software Testing: Apache JMeter  
