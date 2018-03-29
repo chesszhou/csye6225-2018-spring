@@ -54,10 +54,12 @@ public class IndexController{
     }
 
     @RequestMapping("/resetPassword")
-    public String resetPassword(@RequestParam("username") String username,
-                                Model model) {
+    public String resetPassword(@RequestParam("username") String username) {
         AmazonSNS snsClient = AmazonSNSClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
         String msg = username;
+        logger.info(username);
+        logger.info(username);
+        logger.info(username);
         PublishRequest publishRequest = new PublishRequest(env.getProperty("amazon.sns.topic.arn"), msg);
         snsClient.publish(publishRequest);
         return "resetPassword";
