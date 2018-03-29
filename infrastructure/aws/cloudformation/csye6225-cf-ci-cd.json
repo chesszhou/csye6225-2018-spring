@@ -82,7 +82,12 @@
                           ]
                       }
                   ]
-                }
+                },
+                "Roles": [
+                    {
+                        "Fn::GetAtt" : ["RoleForEC2Instance", "RoleName"]
+                    }
+                ]
             }
         },
         "TravisUploadToS3": {

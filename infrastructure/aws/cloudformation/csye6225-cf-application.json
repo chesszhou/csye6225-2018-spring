@@ -83,7 +83,12 @@
       },
       "KeyName": {
 			    "Type": "String"
-		  }
+		  },
+      "ElasticIp": {
+        "Default" : " ",
+        "Description" : "Elastic IP address allocated to instance",
+        "Type" : "String"
+      }
     },
     "Resources": {
         "EC2Instance": {
@@ -214,6 +219,14 @@
               {
                 "DisplayName" : "Password_Reset_Topic",
                 "TopicName" : "MySNSTopic"
+              }
+            },
+        "AssociateElasticIP" : {
+            "Type": "AWS::EC2::EIPAssociation",
+            "Properties":
+              {
+                "EIP": {"Ref": "ElasticIp"},
+                "InstanceId": {"Ref" : "EC2Instance"}
               }
             }
           },
