@@ -61,6 +61,35 @@
                 }
             }
         },
+        "CloudWatchPolicy": {
+            "Type": "AWS::IAM::ManagedPolicy",
+            "Properties": {
+                "ManagedPolicyName": "Cloud-Watch-Policy",
+                "Description": "This policy allows CloudWatch to do some logs work.",
+                "PolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                      {
+                          "Effect": "Allow",
+                          "Action": [
+                              "logs:CreateLogGroup",
+                              "logs:CreateLogStream",
+                              "logs:PutLogEvents",
+                              "logs:DescribeLogStreams"
+                          ],
+                          "Resource": [
+                              "arn:aws:logs:*:*:*"
+                          ]
+                      }
+                  ]
+                },
+                "Roles": [
+                    {
+                        "Ref" : "RoleForEC2Instance"
+                    }
+                ]
+            }
+        },
         "TravisUploadToS3": {
             "Type": "AWS::IAM::ManagedPolicy",
             "Properties": {
@@ -195,7 +224,10 @@
                         }
                     ]
                 },
-                "Path": "/"
+                "Path": "/",
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
+                ]        
             }
         },
         "RoleForCodeDeploy": {

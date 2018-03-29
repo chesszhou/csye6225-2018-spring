@@ -1,11 +1,16 @@
 package com.csye6225.spring2018.controller;
 
 
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.iterable.S3Objects;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.sns.AmazonSNS;
+import com.amazonaws.services.sns.AmazonSNSClient;
+import com.amazonaws.services.sns.AmazonSNSClientBuilder;
+import com.amazonaws.services.sns.model.PublishRequest;
 import com.csye6225.spring2018.BCrypt;
 import com.csye6225.spring2018.Repo.UserRepository;
 import com.csye6225.spring2018.S3Configure;
@@ -42,10 +47,29 @@ public class IndexController{
       return "index";
     }
 
+    @RequestMapping("/resetPage")
+    public String resetPassword(){
+        logger.info("Loading reset page.");
+        return "resetPassword";
+    }
+
     @RequestMapping("/signUp")
     public String sign(){
       logger.info("Loading signUp page.");
       return "signup";
+    }
+
+
+    @RequestMapping("/resetPassword")
+    public String resetPassword(@RequestParam("username") String username) {
+        AmazonSNS snsClient = AmazonSNSClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
+        String msg = username;
+        logger.info(username);
+        logger.info(username);
+        logger.info(username);
+        PublishRequest publishRequest = new PublishRequest(env.getProperty("amazon.sns.topic.arn"), msg);
+        snsClient.publish(publishRequest);
+        return "resetPassword";
     }
 
 
