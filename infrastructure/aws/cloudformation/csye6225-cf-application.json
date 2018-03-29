@@ -157,7 +157,7 @@
                         "sudo echo 'log_group_name = csye6225-webapp' >> /tmp/awslogs.conf",
                         "sudo echo 'log_stream_name = csye6225-webapp' >> /tmp/awslogs.conf",
                         "sudo echo 'datetime_format = %d/%b/%Y:%H:%M:%S' >> /tmp/awslogs.conf",
-                        "sudo wegt https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py",
+                        "sudo wget https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py",
                         "sudo python ./awslogs-agent-setup.py -n -r us-east-1 -c /tmp/awslogs.conf",
                         "cd /etc/systemd/system",
                         "sudo touch awslogs.service",
