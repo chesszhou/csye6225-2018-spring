@@ -47,6 +47,12 @@ public class IndexController{
       return "index";
     }
 
+    @RequestMapping("/resetPage")
+    public String resetPassword(){
+        logger.info("Loading reset page.");
+        return "resetPassword";
+    }
+
     @RequestMapping("/signUp")
     public String sign(){
       logger.info("Loading signUp page.");
