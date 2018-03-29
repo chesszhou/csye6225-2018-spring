@@ -85,7 +85,7 @@
                 },
                 "Roles": [
                     {
-                        "Fn::GetAtt" : ["RoleForEC2Instance", "RoleName"]
+                        "Ref" : "RoleForEC2Instance"
                     }
                 ]
             }
