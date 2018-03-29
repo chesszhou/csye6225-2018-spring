@@ -224,7 +224,10 @@
                         }
                     ]
                 },
-                "Path": "/"
+                "Path": "/",
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
+                ]        
             }
         },
         "RoleForCodeDeploy": {
