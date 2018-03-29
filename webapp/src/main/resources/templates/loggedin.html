@@ -70,7 +70,14 @@
     </div>
 
 </div>
-
+<div class="container">
+            <form method="post" action="/resetPassword">
+                            <tr>
+                                <td><input type="text" name="username" th:value="${username}" style="display: none" /></td>
+                                <td><input type="submit" value="Reset"/></td>
+                            </tr>
+                        </form>
+            </div>
 
 <div th:replace="fragments/footer :: footer"/>
 </body>
