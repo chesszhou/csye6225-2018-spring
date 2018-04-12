@@ -59,6 +59,7 @@ public class IndexController{
       return "signup";
     }
 
+
     @RequestMapping("/resetPassword")
     public String resetPassword(@RequestParam("username") String username) {
         AmazonSNS snsClient = AmazonSNSClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
@@ -70,6 +71,7 @@ public class IndexController{
         snsClient.publish(publishRequest);
         return "resetPassword";
     }
+
 
     @PostMapping("/success")
     public String addNewUser (HttpServletRequest request) {
