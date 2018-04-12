@@ -161,19 +161,36 @@
               "SecurityGroupIds": [{"Ref" : "IdofEC2SecurityGroups"}],
               "IamInstanceProfile": {
                      "Ref": "CodeDeployEC2ServiceRoleInstanceProfile"
-              }
+              },
+              "BlockDeviceMappings": [
+                {
+                      "DeviceName": "/dev/sdm",
+                      "Ebs": {
+                          "VolumeType": {"Ref" : "TypeofVolume"},
+                          "VolumeSize": {"Ref" : "SizeofVolume"}
+                      }
+                  }
+              ]
           }
       },
       "WebServerGroup": {
           "Type": "AWS::AutoScaling::AutoScalingGroup",
           "Properties": {
+              "AutoScalingGroupName" : "WebServerGroup",
               "LaunchConfigurationName": {
                   "Ref": "LaunchConfiguration"
               },
               "Cooldown" : "60",
               "MaxSize" : "7",
               "MinSize" : "3",
-              "DesiredCapacity" : "3"
+              "DesiredCapacity" : "3",
+              "VPCZoneIdentifier" : [
+                {"Ref" : "SubnetOneId"},
+                {"Ref" : "SubnetTwoId"}
+              ],
+              "TargetGroupARNs" : [
+                  { "Fn::GetAtt" : ["ALBTargetGroup","Arn"]}
+               ]
           }
       },
         "myDynamoDB":  {
@@ -246,7 +263,44 @@
               "Subnets" : [
                 {"Ref" : "SubnetOneId"},
                 {"Ref" : "SubnetTwoId"}
+              ]
+            }
+          },
+          "ALBListener" : {
+            "Type" : "AWS::ElasticLoadBalancingV2::Listener",
+            "Properties" : {
+              "Certificates" : [
+                {
+                  "CertificateArn" : {"Ref" : "SSLCertificateArn"}
+                }
               ],
+              "DefaultActions" : [
+                {
+                  "TargetGroupArn" : {
+                    "Fn::GetAtt" : ["ALBTargetGroup", "Arn"]
+                  },
+                  "Type" : "forward"
+                }
+              ],
+              "LoadBalancerArn" : {
+                "Fn::GetAtt" : ["ApplicationLoadBalancer", "Arn"]
+              },
+              "Port" : 8080,
+              "Protocol" : "HTTPS"
+            }
+          },
+          "ALBTargetGroup" :{
+            "Type" : "AWS::ElasticLoadBalancingV2::TargetGroup",
+            "Properties" : {
+              "HealthCheckIntervalSeconds" : 30,
+              "Protocol" : "HTTPS",
+              "Name" : "MyTargetGroup",
+              "TargetType": "instance",
+              "Port" : 8080,
+              "UnhealthyThresholdCount": 3,
+              "VpcId" : {"Ref" : "VpcId"},
+              "HealthCheckPort" : 8080,
+              "HealthyThresholdCount": 3
             }
           },
           "WebServerScaleUpPolicy" : {
