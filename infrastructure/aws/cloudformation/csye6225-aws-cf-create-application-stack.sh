@@ -4,9 +4,12 @@ STACK_NAME=$1
 SUCCESS=""
 WAIT=""
 SUBNET_NAME_DB="subnet-group"
-EC2_SUBNET_ID=$(aws ec2 describe-subnets --filters Name=tag:aws:cloudformation:logical-id,Values=SubnetForWebServers | jq -r '.Subnets[0].SubnetId')
 EC2_SG_ID=$(aws ec2 describe-security-groups --filters Name=tag:aws:cloudformation:logical-id,Values=csye6225webapp | jq -r '.SecurityGroups[0].GroupId')
 RDS_SG_ID=$(aws ec2 describe-security-groups --filters Name=tag:aws:cloudformation:logical-id,Values=SecurityGroupForDBServers | jq -r '.SecurityGroups[0].GroupId')
+SubnetOneId=$(aws ec2 describe-subnets --filters Name=tag:aws:cloudformation:logical-id,Values=SubnetForWebServers | jq -r '.Subnets[0].SubnetId')
+SubnetTwoId=$(aws ec2 describe-subnets --filters Name=tag:aws:cloudformation:logical-id,Values=SubnetForDBServers | jq -r '.Subnets[0].SubnetId')
+VpcId=$(aws ec2 describe-vpcs --filters Name=tag:aws:cloudformation:logical-id,Values=vpc | jq -r '.Vpcs[0].VpcId')
+SSLCertificateArn=$(aws acm list-certificates --certificate-statuses ISSUED | jq -r '.CertificateSummaryList[0].CertificateArn')
 
 
 
