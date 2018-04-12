@@ -56,9 +56,14 @@
         "Description" : "The group name of DB subnet",
         "Type" : "String"
       },
-      "IdofEC2Subnet": {
+      "SubnetOneId": {
         "Default" : " ",
         "Description" : "EC2 subnet id",
+        "Type" : "String"
+      },
+      "SubnetTwoId": {
+        "Default" : " ",
+        "Description" : "another subnet id",
         "Type" : "String"
       },
       "IdofEC2SecurityGroups" : {
@@ -83,7 +88,27 @@
       },
       "KeyName": {
 			    "Type": "String"
-		  }
+		  },
+      "TagKey": {
+          "Default": " ",
+          "Description": "Tag instances with this key.",
+          "Type": "String"
+      },
+      "TagValue": {
+          "Default": " ",
+          "Description": "Tag instances with this tag value.",
+          "Type": "String"
+      },
+      "VpcId":{
+        "Default": " ",
+        "Description": "vpc id",
+        "Type": "String"
+      },
+      "SSLCertificateArn" : {
+        "Default": " ",
+        "Description": "The Amazon Resource Name (ARN) of the certificate to associate with the listener.",
+        "Type": "String"
+      }
     },
     "Resources": {
       "LaunchConfiguration": {
@@ -190,7 +215,14 @@
               ],
               "TargetGroupARNs" : [
                   { "Fn::GetAtt" : ["ALBTargetGroup","Arn"]}
-               ]
+               ],
+               "Tags": [
+                 {
+                   "Key" : {"Ref" : "TagKey"},
+                   "Value" : {"Ref" : "TagValue"},
+                   "PropagateAtLaunch" : true
+                }
+              ]
           }
       },
         "myDynamoDB":  {
