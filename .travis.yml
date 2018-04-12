@@ -61,6 +61,8 @@ deploy:
 notifications:
   email:
     recipients:
+      - zhu.zheny@husky.neu.edu
+      - guo.bei@husky.neu.edu
       - zhou.yiy@husky.neu.edu
     on_success: always
     on_failure: never
