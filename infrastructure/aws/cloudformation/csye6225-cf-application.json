@@ -108,6 +108,11 @@
         "Default": " ",
         "Description": "The Amazon Resource Name (ARN) of the certificate to associate with the listener.",
         "Type": "String"
+      },
+      "LoadBalancerSecurityGroup" : {
+        "Default": " ",
+        "Description": "A security group for application load balancer",
+        "Type": "String"
       }
     },
     "Resources": {
@@ -183,7 +188,7 @@
                   ]
                 }
               },
-              "SecurityGroupIds": [{"Ref" : "IdofEC2SecurityGroups"}],
+              "SecurityGroups": [{"Ref" : "IdofEC2SecurityGroups"}],
               "IamInstanceProfile": {
                      "Ref": "CodeDeployEC2ServiceRoleInstanceProfile"
               },
@@ -214,7 +219,7 @@
                 {"Ref" : "SubnetTwoId"}
               ],
               "TargetGroupARNs" : [
-                  { "Fn::GetAtt" : ["ALBTargetGroup","Arn"]}
+                  { "Ref" : "ALBTargetGroup"}
                ],
                "Tags": [
                  {
@@ -295,7 +300,8 @@
               "Subnets" : [
                 {"Ref" : "SubnetOneId"},
                 {"Ref" : "SubnetTwoId"}
-              ]
+              ],
+              "SecurityGroups" : [{"Ref" : "LoadBalancerSecurityGroup"}]
             }
           },
           "ALBListener" : {
@@ -309,15 +315,15 @@
               "DefaultActions" : [
                 {
                   "TargetGroupArn" : {
-                    "Fn::GetAtt" : ["ALBTargetGroup", "Arn"]
+                    "Ref" : "ALBTargetGroup"
                   },
                   "Type" : "forward"
                 }
               ],
               "LoadBalancerArn" : {
-                "Fn::GetAtt" : ["ApplicationLoadBalancer", "Arn"]
+                "Ref" : "ApplicationLoadBalancer"
               },
-              "Port" : 8080,
+              "Port" : 443,
               "Protocol" : "HTTPS"
             }
           },
@@ -325,7 +331,7 @@
             "Type" : "AWS::ElasticLoadBalancingV2::TargetGroup",
             "Properties" : {
               "HealthCheckIntervalSeconds" : 30,
-              "Protocol" : "HTTPS",
+              "Protocol" : "HTTP",
               "Name" : "MyTargetGroup",
               "TargetType": "instance",
               "Port" : 8080,
@@ -415,47 +421,12 @@
                   "Name" : "csye6225-spring2018-guobei.me.",
                   "Type" : "A",
                   "AliasTarget" : {
-                      "HostedZoneId" : { "Fn::GetAtt" : ["ApplicationLoadBalancer", "CanonicalHostedZoneNameID"] },
+                      "HostedZoneId" : { "Fn::GetAtt" : ["ApplicationLoadBalancer", "CanonicalHostedZoneID"] },
                       "DNSName" : { "Fn::GetAtt" : ["ApplicationLoadBalancer","DNSName"] }
                   }
                 }
               ]
             }
           }
-        },
-          "Outputs" : {
-            "InstanceId": {
-                "Description": "InstanceId of the newly created EC2 instance",
-                "Value": {
-                    "Ref": "EC2Instance"
-                }
-            },
-            "AZ": {
-             "Description": "Availability Zone of the newly created EC2 instance",
-             "Value": {
-                 "Fn::GetAtt": [
-                     "EC2Instance",
-                     "AvailabilityZone"
-                 ]
-               }
-           },
-           "PublicDNS": {
-            "Description": "Public DNSName of the newly created EC2 instance",
-            "Value": {
-                "Fn::GetAtt": [
-                    "EC2Instance",
-                    "PublicDnsName"
-                ]
-            }
-          },
-          "PublicIP": {
-            "Description": "Public IP address of the newly created EC2 instance",
-            "Value": {
-                "Fn::GetAtt": [
-                    "EC2Instance",
-                    "PublicIp"
-                ]
-            }
-          }
-        }
+      }
 }

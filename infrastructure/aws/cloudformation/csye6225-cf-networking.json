@@ -149,7 +149,7 @@
                 },
                 "CidrBlock": "10.0.1.0/24",
                 "AvailabilityZone": "us-east-1e"
-            }
+              }
         },
         "SubnetPrivateRouteTableAssociation": {
             "Type": "AWS::EC2::SubnetRouteTableAssociation",
@@ -160,6 +160,28 @@
                 "SubnetId": {
                     "Ref": "SubnetForDBServers"
                 }
+            }
+        },
+        "SubnetForAutoScaling" : {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "vpc"
+                },
+                "CidrBlock": "10.0.2.0/24",
+                "MapPublicIpOnLaunch": true,
+                "AvailabilityZone": "us-east-1a"
+            }
+        },
+        "SubnetForAutoScalingAndPublicRouteTableAssociation": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+              "RouteTableId": {
+                  "Ref": "PublicRouteTable"
+              },
+              "SubnetId": {
+                  "Ref": "SubnetForAutoScaling"
+              }
             }
         },
         "csye6225webapp": {
@@ -215,6 +237,30 @@
                     }
                 ]
             }
+        },
+        "SecurityGroupForLoadBalancer": {
+          "Type" : "AWS::EC2::SecurityGroup",
+          "Properties": {
+            "GroupName" : "SecurityGroupForLoadBalancer",
+            "VpcId": {
+                "Ref": "vpc"
+            },
+            "GroupDescription": "a security group for application load balancer",
+            "SecurityGroupIngress" : [{
+                "FromPort" : 443,
+                "ToPort" : 443,
+                "IpProtocol" : "tcp",
+                "CidrIp" : "0.0.0.0/0"
+              }],
+            "SecurityGroupEgress" : [{
+                "FromPort" : 8080,
+                "ToPort" : 8080,
+                "IpProtocol" : "tcp",
+                "DestinationSecurityGroupId": {
+                    "Ref": "csye6225webapp"
+                }
+              }]
+          }
         },
         "RDSSubnetGroup": {
             "Type": "AWS::RDS::DBSubnetGroup",
