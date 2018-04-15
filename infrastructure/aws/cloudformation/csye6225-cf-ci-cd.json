@@ -35,6 +35,11 @@
             "Default": " ",
             "Description": "A service role Amazon Resource Name (ARN) that grants AWS CodeDeploy permission to make calls to AWS services on your behalf. ",
             "Type": "String"
+        },
+        "TargetGroupName" : {
+          "Default": " ",
+          "Description": "Target Group Name",
+          "Type": "String"
         }
     },
     "Resources": {
@@ -227,7 +232,7 @@
                 "Path": "/",
                 "ManagedPolicyArns": [
                     "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
-                ]        
+                ]
             }
         },
         "RoleForCodeDeploy": {
@@ -293,7 +298,10 @@
                 ],
                 "ServiceRoleArn": {
                   "Fn::GetAtt" : ["RoleForCodeDeploy", "Arn"]
-                 }
+                },
+                "LoadBalancerInfo" : {
+                    "TargetGroupInfoList" : [ { "Name": {"Ref" : "TargetGroupName"}}]
+                }
             },
             "DependsOn": [
                 "CodeDeployApplication"

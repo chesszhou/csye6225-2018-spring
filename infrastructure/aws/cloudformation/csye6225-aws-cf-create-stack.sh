@@ -2,11 +2,14 @@
 #!/bin/sh
 
 STACK_NAME=$1
-SUCCESS=""
+STACKID=""
+STATUS=""
 
-SUCCESS=$(aws cloudformation create-stack --stack-name $STACK_NAME --template-body file://csye6225-cf-networking.json )
+STACKID=$(aws cloudformation create-stack --stack-name $STACK_NAME --template-body file://csye6225-cf-networking.json )
+aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
+STATUS=$(aws cloudformation describe-stack-events --stack-name $STACK_NAME | jq -r '.StackEvents[0].ResourceStatus')
 
-if [ ! -z "$SUCCESS" ]; then
+if [ ! -z "$STACKID" ] && [ "$STATUS" = "CREATE_COMPLETE" ]; then
   #statements
   echo "Success!"
 else
