@@ -214,7 +214,9 @@
                         "IpProtocol": "tcp",
                         "FromPort": "8080",
                         "ToPort": "8080",
-                        "CidrIp": "0.0.0.0/0"
+                        "SourceSecurityGroupId": {
+                            "Ref": "SecurityGroupForLoadBalancer"
+                        }
                     }
                 ]
             }
@@ -256,9 +258,7 @@
                 "FromPort" : 8080,
                 "ToPort" : 8080,
                 "IpProtocol" : "tcp",
-                "DestinationSecurityGroupId": {
-                    "Ref": "csye6225webapp"
-                }
+                "CidrIp" : "0.0.0.0/0"
               }]
           }
         },
