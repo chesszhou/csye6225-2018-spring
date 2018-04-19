@@ -8,7 +8,7 @@ STATUS=$(aws cloudformation describe-stacks --stack-name $STACK_NAME)
 if [ -z "$STATUS" ]; then
   echo "The stack you entered does not exist!"
 else
-  aws s3 rm s3://code-deploy.csye6225-spring2018-guobei.me --recursive
+  aws s3 rm s3://code-deploy.csye6225-spring2018-zhouyiy.me --recursive
   aws cloudformation delete-stack --stack-name $STACK_NAME
   aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME
   STATUS=$(aws cloudformation describe-stacks --stack-name $STACK_NAME)
