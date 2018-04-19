@@ -414,11 +414,11 @@
           "Route53RecordSetGroup" : {
             "Type" : "AWS::Route53::RecordSetGroup",
             "Properties" : {
-              "HostedZoneName" : "csye6225-spring2018-guobei.me.",
+              "HostedZoneName" : "csye6225-spring2018-zhouyiy.me.",
               "Comment" : "Zone apex alias targeted to my Application Load Balancer.",
               "RecordSets" : [
                 {
-                  "Name" : "csye6225-spring2018-guobei.me.",
+                  "Name" : "csye6225-spring2018-zhouyiy.me.",
                   "Type" : "A",
                   "AliasTarget" : {
                       "HostedZoneId" : { "Fn::GetAtt" : ["ApplicationLoadBalancer", "CanonicalHostedZoneID"] },
